@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { MainScreen, ProfileScreen, EditProfileScreen, ProgressScreen } from './src/components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MainScreen, ProfileScreen, EditProfileScreen, ProgressScreen, OnboardingScreen } from './src/components';
 
-type Screen = 'main' | 'profile' | 'editProfile' | 'progress';
+type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'progress';
 
 interface UserData {
   name: string;
@@ -14,13 +15,43 @@ interface UserData {
 }
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState<Screen>('main');
+  const [currentScreen, setCurrentScreen] = useState<Screen>('onboarding');
+  const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<UserData>({
     name: "John Doe",
     email: "john.doe@example.com",
     phone: "+1 234 567 8900",
     currentWeight: 75,
   });
+
+  // Verificar si el usuario ya completó el onboarding
+  useEffect(() => {
+    checkOnboardingStatus();
+  }, []);
+
+  const checkOnboardingStatus = async () => {
+    try {
+      // Siempre mostrar el onboarding (comentado para forzar que aparezca)
+      // const hasCompletedOnboarding = await AsyncStorage.getItem('hasCompletedOnboarding');
+      // if (hasCompletedOnboarding === 'true') {
+      //   setCurrentScreen('main');
+      // }
+    } catch (error) {
+      console.log('Error checking onboarding status:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Función para resetear el onboarding (útil durante desarrollo)
+  const resetOnboarding = async () => {
+    try {
+      await AsyncStorage.removeItem('hasCompletedOnboarding');
+      setCurrentScreen('onboarding');
+    } catch (error) {
+      console.log('Error resetting onboarding:', error);
+    }
+  };
 
   const navigateToProfile = () => {
     setCurrentScreen('profile');
@@ -34,6 +65,16 @@ export default function App() {
     setCurrentScreen('progress');
   };
 
+  const completeOnboarding = async () => {
+    try {
+      await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
+      setCurrentScreen('main');
+    } catch (error) {
+      console.log('Error saving onboarding status:', error);
+      setCurrentScreen('main'); // Continuar de todos modos
+    }
+  };
+
   const navigateToMain = () => {
     setCurrentScreen('main');
   };
@@ -43,7 +84,13 @@ export default function App() {
   };
 
   const renderScreen = () => {
+    if (isLoading) {
+      return <View style={styles.loadingContainer} />;
+    }
+
     switch (currentScreen) {
+      case 'onboarding':
+        return <OnboardingScreen onComplete={completeOnboarding} />;
       case 'progress':
         return (
           <ProgressScreen 
@@ -92,6 +139,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: '#1a1a1a',
+  },
+  loadingContainer: {
     flex: 1,
     backgroundColor: '#1a1a1a',
   },

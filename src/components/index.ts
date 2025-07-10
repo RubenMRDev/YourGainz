@@ -6,3 +6,4 @@ export { MainScreen } from './MainScreen';
 export { ProfileScreen } from './ProfileScreen';
 export { EditProfileScreen } from './EditProfileScreen';
 export { ProgressScreen } from './ProgressScreen';
+export { OnboardingScreen } from './OnboardingScreen';
