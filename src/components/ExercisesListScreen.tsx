@@ -106,9 +106,7 @@ export const ExercisesListScreen: React.FC<ExercisesListScreenProps> = ({
           <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Exercises</Text>
-        <TouchableOpacity style={styles.filterButton}>
-          <Ionicons name="options" size={24} color={colors.text.primary} />
-        </TouchableOpacity>
+        <View style={styles.invisiblePlaceholder} />
       </View>
 
       {/* Search Bar */}
@@ -196,6 +194,11 @@ const styles = StyleSheet.create({
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
     color: colors.text.primary,
+  },
+  invisiblePlaceholder: {
+    width: 40,
+    height: 40,
+    backgroundColor: colors.background,
   },
   filterButton: {
     width: 40,
