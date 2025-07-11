@@ -428,7 +428,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
               style={styles.modalFiltersContainer}
               contentContainerStyle={styles.modalFiltersContent}
             >
-              {muscleGroups.slice(1).map((group) => (
+              {muscleGroups.map((group) => (
                 <TouchableOpacity
                   key={group}
                   style={[
