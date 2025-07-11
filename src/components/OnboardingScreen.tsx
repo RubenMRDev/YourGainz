@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  StatusBar,
   ScrollView,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -74,8 +73,6 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={colors.background} barStyle="light-content" />
-      
       {/* Main Content */}
       <ScrollView 
         ref={scrollViewRef}

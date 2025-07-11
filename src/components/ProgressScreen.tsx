@@ -315,6 +315,7 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
                 value={newWeight}
                 onChangeText={setNewWeight}
                 placeholder="Ej: 75.5"
+                placeholderTextColor={colors.text.secondary}
                 keyboardType="numeric"
                 autoFocus
               />
