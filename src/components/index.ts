@@ -12,5 +12,6 @@ export { RoutineHistoryDetailScreen } from './RoutineHistoryDetailScreen';
 export { EditRoutineHistoryScreen } from './EditRoutineHistoryScreen';
 export { ProfileScreen } from './ProfileScreen';
 export { EditProfileScreen } from './EditProfileScreen';
+export { SettingsScreen } from './SettingsScreen';
 export { ProgressScreen } from './ProgressScreen';
 export { OnboardingScreen } from './OnboardingScreen';

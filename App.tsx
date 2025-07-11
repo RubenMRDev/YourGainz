@@ -3,10 +3,10 @@ import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet, Alert } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MainScreen, ProfileScreen, EditProfileScreen, ProgressScreen, OnboardingScreen, ExerciseScreen, ExercisesListScreen, RoutinesScreen, RoutineTrackingScreen, RoutineHistoryScreen, RoutineHistoryDetailScreen, EditRoutineHistoryScreen } from './src/components';
+import { MainScreen, ProfileScreen, EditProfileScreen, SettingsScreen, ProgressScreen, OnboardingScreen, ExerciseScreen, ExercisesListScreen, RoutinesScreen, RoutineTrackingScreen, RoutineHistoryScreen, RoutineHistoryDetailScreen, EditRoutineHistoryScreen } from './src/components';
 import { RoutineHistory, CompletedExercise } from './src/types/history';
 
-type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'progress' | 'exercises' | 'exercisesList' | 'routines' | 'routineTracking' | 'routineHistory' | 'routineHistoryDetail' | 'editRoutineHistory';
+type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'settings' | 'progress' | 'exercises' | 'exercisesList' | 'routines' | 'routineTracking' | 'routineHistory' | 'routineHistoryDetail' | 'editRoutineHistory';
 
 interface UserData {
   name: string;
@@ -165,6 +165,10 @@ export default function App() {
 
   const navigateToEditProfile = () => {
     setCurrentScreen('editProfile');
+  };
+
+  const navigateToSettings = () => {
+    setCurrentScreen('settings');
   };
 
   const navigateToProgress = () => {
@@ -330,6 +334,13 @@ export default function App() {
             userPhone={userData.phone}
             userWeight={userData.currentWeight}
             onGoBack={navigateToMain}
+            onOpenSettings={navigateToSettings}
+          />
+        );
+      case 'settings':
+        return (
+          <SettingsScreen 
+            onGoBack={() => setCurrentScreen('profile')}
             onEditProfile={navigateToEditProfile}
           />
         );

@@ -7,7 +7,7 @@ import { colors, typography, spacing } from '../constants/theme';
 interface ProfileScreenProps {
   userName: string;
   onGoBack: () => void;
-  onEditProfile?: () => void;
+  onOpenSettings?: () => void;
   userEmail?: string;
   userPhone?: string;
   userWeight?: number;
@@ -16,7 +16,7 @@ interface ProfileScreenProps {
 export const ProfileScreen: React.FC<ProfileScreenProps> = ({ 
   userName, 
   onGoBack, 
-  onEditProfile,
+  onOpenSettings,
   userEmail = 'john.doe@example.com',
   userPhone = '+1 234 567 8900',
   userWeight = 75
@@ -113,27 +113,9 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Configuración</Text>
           
-          <TouchableOpacity style={styles.settingItem} onPress={onEditProfile}>
+          <TouchableOpacity style={styles.settingItem} onPress={onOpenSettings}>
             <Ionicons name="settings-outline" size={20} color={colors.text.secondary} />
             <Text style={styles.settingText}>Configuración general</Text>
-            <Ionicons name="chevron-forward" size={20} color={colors.text.secondary} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingItem}>
-            <Ionicons name="notifications-outline" size={20} color={colors.text.secondary} />
-            <Text style={styles.settingText}>Notificaciones</Text>
-            <Ionicons name="chevron-forward" size={20} color={colors.text.secondary} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingItem}>
-            <Ionicons name="shield-outline" size={20} color={colors.text.secondary} />
-            <Text style={styles.settingText}>Privacidad</Text>
-            <Ionicons name="chevron-forward" size={20} color={colors.text.secondary} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingItem}>
-            <Ionicons name="help-circle-outline" size={20} color={colors.text.secondary} />
-            <Text style={styles.settingText}>Ayuda y soporte</Text>
             <Ionicons name="chevron-forward" size={20} color={colors.text.secondary} />
           </TouchableOpacity>
         </View>
