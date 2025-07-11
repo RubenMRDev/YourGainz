@@ -50,6 +50,7 @@ interface Routine {
 
 interface RoutinesScreenProps {
   onBackPress: () => void;
+  onStartRoutine?: (routine: Routine) => void;
 }
 
 const muscleGroups = ['All', 'Chest', 'Back', 'Legs', 'Shoulders', 'Arms', 'Core'];
@@ -68,7 +69,8 @@ const getDifficultyColor = (difficulty: string) => {
 };
 
 export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({ 
-  onBackPress 
+  onBackPress,
+  onStartRoutine 
 }) => {
   const insets = useSafeAreaInsets();
   const [routines, setRoutines] = useState<Routine[]>(routinesData as Routine[]);
@@ -178,11 +180,10 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
   };
 
   const toggleRoutineActive = (routineId: string) => {
-    setRoutines(prev => prev.map(routine => 
-      routine.id === routineId 
-        ? { ...routine, isActive: !routine.isActive }
-        : routine
-    ));
+    const routine = routines.find(r => r.id === routineId);
+    if (routine && onStartRoutine) {
+      onStartRoutine(routine);
+    }
   };
 
   const renderRoutineCard = ({ item }: { item: Routine }) => (
@@ -207,7 +208,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
             onPress={() => toggleRoutineActive(item.id)}
           >
             <Ionicons 
-              name={item.isActive ? "pause" : "play"} 
+              name="play" 
               size={16} 
               color={colors.text.primary} 
             />

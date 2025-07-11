@@ -18,10 +18,12 @@ export type NavigationRoute =
   | 'Training'
   | 'Progress'
   | 'Nutrition'
-  | 'Community';
+  | 'Community'
+  | 'History';
 
 export type ExerciseNavigationRoute = 
   | 'Routines'
   | 'Exercises'
   | 'Workouts'
-  | 'Programs';
+  | 'Programs'
+  | 'History';

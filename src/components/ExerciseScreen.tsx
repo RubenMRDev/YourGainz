@@ -17,6 +17,7 @@ interface ExerciseScreenProps {
   onBackPress?: () => void;
   onExercisesPress?: () => void;
   onRoutinesPress?: () => void;
+  onHistoryPress?: () => void;
 }
 
 export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({ 
@@ -24,7 +25,8 @@ export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({
   onProfilePress,
   onBackPress,
   onExercisesPress,
-  onRoutinesPress
+  onRoutinesPress,
+  onHistoryPress
 }) => {
   const insets = useSafeAreaInsets();
   
@@ -53,11 +55,15 @@ export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({
         }
         break;
       case 'History':
-        Alert.alert(
-          'Historial',
-          'Revisa tu historial de entrenamientos',
-          [{ text: 'OK' }]
-        );
+        if (onHistoryPress) {
+          onHistoryPress();
+        } else {
+          Alert.alert(
+            'Historial',
+            'Revisa tu historial de entrenamientos',
+            [{ text: 'OK' }]
+          );
+        }
         break;
       default:
         Alert.alert(

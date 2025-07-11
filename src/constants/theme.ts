@@ -14,7 +14,8 @@ export const colors = {
     training: '#FFD700',
     progress: '#FFD700',
     nutrition: '#FFD700',
-    community: '#FFD700'
+    community: '#FFD700',
+    history: '#FFD700'
   }
 };
 
