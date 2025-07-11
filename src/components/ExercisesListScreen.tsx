@@ -227,17 +227,18 @@ const styles = StyleSheet.create({
   filtersWrapper: {
     marginHorizontal: spacing.lg, // Agregar margen a los lados
     marginTop: spacing.md,
-    marginBottom: spacing.sm,
+    marginBottom: 0, // Espacio eliminado completamente
   },
   filtersContainer: {
-    height: 50, // Fixed height for container
+    // Quitar altura fija que está causando el corte
   },
   filtersContent: {
-    paddingLeft: spacing.sm, // Reducido para usar el margen del wrapper
-    paddingRight: spacing.sm, // Padding mínimo necesario
+    paddingLeft: spacing.lg, // Padding suficiente para evitar cortes
+    paddingRight: spacing.lg, // Padding suficiente para evitar cortes
+    paddingVertical: spacing.sm, // Reducido el padding vertical
     gap: spacing.sm,
-    alignItems: 'center',
-    height: 50, // Fixed height for content
+    alignItems: 'flex-start', // Cambiar de center a flex-start para evitar cortes
+    // Quitar altura fija que está causando el corte
   },
   filterChip: {
     paddingHorizontal: 20,
@@ -268,7 +269,7 @@ const styles = StyleSheet.create({
   resultsContainer: {
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
-    marginTop: spacing.md,
+    marginTop: 4, // Espacio mínimo desde los filtros
   },
   resultsText: {
     fontSize: typography.sizes.sm,
@@ -276,7 +277,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingHorizontal: spacing.lg,
-    paddingBottom: spacing.xl,
+    paddingBottom: spacing.xl * 2, // Más espacio para evitar cortes en la parte inferior
   },
   exerciseCard: {
     backgroundColor: colors.cardBackground,

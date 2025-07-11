@@ -16,24 +16,30 @@ interface ExerciseScreenProps {
   onProfilePress?: () => void;
   onBackPress?: () => void;
   onExercisesPress?: () => void;
+  onRoutinesPress?: () => void;
 }
 
 export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({ 
   userName = 'John Doe',
   onProfilePress,
   onBackPress,
-  onExercisesPress
+  onExercisesPress,
+  onRoutinesPress
 }) => {
   const insets = useSafeAreaInsets();
   
   const handleNavigation = (route: ExerciseNavigationRoute) => {
     switch (route) {
       case 'Routines':
-        Alert.alert(
-          'Rutinas',
-          'Gestiona tus rutinas de entrenamiento',
-          [{ text: 'OK' }]
-        );
+        if (onRoutinesPress) {
+          onRoutinesPress();
+        } else {
+          Alert.alert(
+            'Rutinas',
+            'Gestiona tus rutinas de entrenamiento',
+            [{ text: 'OK' }]
+          );
+        }
         break;
       case 'Exercises':
         if (onExercisesPress) {

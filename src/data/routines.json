@@ -1,0 +1,187 @@
+[
+  {
+    "id": "1",
+    "name": "Push Day",
+    "description": "Rutina de empuje: pecho, hombros y tríceps",
+    "muscleGroups": ["Chest", "Shoulders", "Arms"],
+    "exercises": [
+      {
+        "id": "1",
+        "name": "Push-ups",
+        "sets": 3,
+        "reps": "12-15",
+        "weight": null,
+        "rest": "60s"
+      },
+      {
+        "id": "4",
+        "name": "Shoulder Press",
+        "sets": 3,
+        "reps": "8-10",
+        "weight": "40kg",
+        "rest": "90s"
+      },
+      {
+        "id": "10",
+        "name": "Tricep Dips",
+        "sets": 3,
+        "reps": "10-12",
+        "weight": null,
+        "rest": "60s"
+      }
+    ],
+    "duration": "45 min",
+    "difficulty": "Intermediate",
+    "lastPerformed": "2025-01-10",
+    "isActive": false,
+    "createdDate": "2025-01-01"
+  },
+  {
+    "id": "2",
+    "name": "Pull Day",
+    "description": "Rutina de tracción: espalda y bíceps",
+    "muscleGroups": ["Back", "Arms"],
+    "exercises": [
+      {
+        "id": "3",
+        "name": "Pull-ups",
+        "sets": 3,
+        "reps": "6-8",
+        "weight": null,
+        "rest": "90s"
+      },
+      {
+        "id": "5",
+        "name": "Bent-over Row",
+        "sets": 4,
+        "reps": "8-10",
+        "weight": "50kg",
+        "rest": "90s"
+      },
+      {
+        "id": "11",
+        "name": "Hammer Curls",
+        "sets": 3,
+        "reps": "12-15",
+        "weight": "15kg",
+        "rest": "60s"
+      }
+    ],
+    "duration": "50 min",
+    "difficulty": "Advanced",
+    "lastPerformed": "2025-01-08",
+    "isActive": false,
+    "createdDate": "2025-01-01"
+  },
+  {
+    "id": "3",
+    "name": "Leg Day",
+    "description": "Rutina completa de piernas",
+    "muscleGroups": ["Legs"],
+    "exercises": [
+      {
+        "id": "2",
+        "name": "Squats",
+        "sets": 4,
+        "reps": "10-12",
+        "weight": "60kg",
+        "rest": "120s"
+      },
+      {
+        "id": "6",
+        "name": "Romanian Deadlift",
+        "sets": 3,
+        "reps": "8-10",
+        "weight": "70kg",
+        "rest": "90s"
+      },
+      {
+        "id": "14",
+        "name": "Calf Raises",
+        "sets": 4,
+        "reps": "15-20",
+        "weight": "20kg",
+        "rest": "60s"
+      }
+    ],
+    "duration": "60 min",
+    "difficulty": "Intermediate",
+    "lastPerformed": "2025-01-09",
+    "isActive": false,
+    "createdDate": "2025-01-01"
+  },
+  {
+    "id": "4",
+    "name": "Core Blast",
+    "description": "Rutina intensiva de abdominales y core",
+    "muscleGroups": ["Core"],
+    "exercises": [
+      {
+        "id": "15",
+        "name": "Plank",
+        "sets": 3,
+        "reps": "60s",
+        "weight": null,
+        "rest": "45s"
+      },
+      {
+        "id": "16",
+        "name": "Russian Twists",
+        "sets": 3,
+        "reps": "20",
+        "weight": "10kg",
+        "rest": "60s"
+      },
+      {
+        "id": "17",
+        "name": "Mountain Climbers",
+        "sets": 3,
+        "reps": "30",
+        "weight": null,
+        "rest": "60s"
+      }
+    ],
+    "duration": "25 min",
+    "difficulty": "Beginner",
+    "lastPerformed": "2025-01-11",
+    "isActive": false,
+    "createdDate": "2025-01-05"
+  },
+  {
+    "id": "5",
+    "name": "Full Body Strength",
+    "description": "Rutina completa de cuerpo entero",
+    "muscleGroups": ["Chest", "Back", "Legs", "Arms"],
+    "exercises": [
+      {
+        "id": "1",
+        "name": "Push-ups",
+        "sets": 3,
+        "reps": "10-12",
+        "weight": null,
+        "rest": "60s"
+      },
+      {
+        "id": "2",
+        "name": "Squats",
+        "sets": 3,
+        "reps": "12-15",
+        "weight": "50kg",
+        "rest": "90s"
+      },
+      {
+        "id": "3",
+        "name": "Pull-ups",
+        "sets": 2,
+        "reps": "5-8",
+        "weight": null,
+        "rest": "120s"
+      }
+    ],
+    "duration": "40 min",
+    "difficulty": "Intermediate",
+    "lastPerformed": null,
+    "isActive": false,
+    "createdDate": "2025-01-03"
+  }
+]

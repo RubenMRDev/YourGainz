@@ -3,9 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MainScreen, ProfileScreen, EditProfileScreen, ProgressScreen, OnboardingScreen, ExerciseScreen, ExercisesListScreen } from './src/components';
+import { MainScreen, ProfileScreen, EditProfileScreen, ProgressScreen, OnboardingScreen, ExerciseScreen, ExercisesListScreen, RoutinesScreen } from './src/components';
 
-type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'progress' | 'exercises' | 'exercisesList';
+type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'progress' | 'exercises' | 'exercisesList' | 'routines';
 
 interface UserData {
   name: string;
@@ -73,6 +73,10 @@ export default function App() {
     setCurrentScreen('exercisesList');
   };
 
+  const navigateToRoutines = () => {
+    setCurrentScreen('routines');
+  };
+
   const completeOnboarding = async () => {
     try {
       await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
@@ -106,11 +110,18 @@ export default function App() {
             onProfilePress={navigateToProfile}
             onBackPress={navigateToMain}
             onExercisesPress={navigateToExercisesList}
+            onRoutinesPress={navigateToRoutines}
           />
         );
       case 'exercisesList':
         return (
           <ExercisesListScreen
+            onBackPress={navigateToExercises}
+          />
+        );
+      case 'routines':
+        return (
+          <RoutinesScreen 
             onBackPress={navigateToExercises}
           />
         );
