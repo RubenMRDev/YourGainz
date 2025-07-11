@@ -83,6 +83,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
   const [newRoutineDescription, setNewRoutineDescription] = useState('');
   const [selectedExercises, setSelectedExercises] = useState<RoutineExercise[]>([]);
   const [modalMuscleFilter, setModalMuscleFilter] = useState('All');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<'Beginner' | 'Intermediate' | 'Advanced'>('Intermediate');
 
   const filteredRoutines = useMemo(() => {
     let filtered = routines;
@@ -128,7 +129,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
       }))],
       exercises: selectedExercises,
       duration: '45 min', // Calculado aproximadamente
-      difficulty: 'Intermediate',
+      difficulty: selectedDifficulty,
       lastPerformed: null,
       isActive: false,
       createdDate: new Date().toISOString().split('T')[0]
@@ -138,6 +139,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
     setNewRoutineName('');
     setNewRoutineDescription('');
     setSelectedExercises([]);
+    setSelectedDifficulty('Intermediate');
     setShowCreateModal(false);
     Alert.alert('Éxito', 'Rutina creada correctamente');
   };
@@ -352,6 +354,31 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
                 multiline
                 numberOfLines={2}
               />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Dificultad</Text>
+              <View style={styles.difficultySelector}>
+                {(['Beginner', 'Intermediate', 'Advanced'] as const).map((difficulty) => (
+                  <TouchableOpacity
+                    key={difficulty}
+                    style={[
+                      styles.difficultyOption,
+                      selectedDifficulty === difficulty && styles.difficultyOptionActive,
+                      { backgroundColor: selectedDifficulty === difficulty ? getDifficultyColor(difficulty) : colors.surface }
+                    ]}
+                    onPress={() => setSelectedDifficulty(difficulty)}
+                  >
+                    <Text style={[
+                      styles.difficultyOptionText,
+                      selectedDifficulty === difficulty && styles.difficultyOptionTextActive
+                    ]}>
+                      {difficulty === 'Beginner' ? 'Principiante' : 
+                       difficulty === 'Intermediate' ? 'Intermedio' : 'Avanzado'}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
 
             <View style={styles.inputContainer}>
@@ -828,5 +855,36 @@ const styles = StyleSheet.create({
   } as any,
   filterChipTextActive: {
     color: colors.background,
+  },
+  // Difficulty Selector Styles
+  difficultySelector: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+    marginTop: spacing.xs,
+  },
+  difficultyOption: {
+    flex: 1,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.xs,
+    borderRadius: borderRadius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: colors.surface,
+    minHeight: 44,
+  },
+  difficultyOptionActive: {
+    borderColor: 'transparent',
+  },
+  difficultyOptionText: {
+    fontSize: typography.sizes.xs,
+    fontWeight: typography.weights.medium,
+    color: colors.text.primary,
+    textAlign: 'center',
+    flexWrap: 'nowrap',
+  },
+  difficultyOptionTextActive: {
+    color: colors.background,
+    fontWeight: typography.weights.semibold,
   },
 });
