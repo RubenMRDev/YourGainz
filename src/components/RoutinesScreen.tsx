@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, spacing, typography, borderRadius } from '../constants/theme';
+import { spacing, typography, borderRadius } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 import routinesData from '../data/routines.json';
 import exercisesData from '../data/exercises.json';
 
@@ -55,24 +56,27 @@ interface RoutinesScreenProps {
 
 const muscleGroups = ['All', 'Chest', 'Back', 'Legs', 'Shoulders', 'Arms', 'Core'];
 
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty) {
-    case 'Beginner':
-      return '#22c55e'; // Green
-    case 'Intermediate':
-      return '#f59e0b'; // Yellow/Orange
-    case 'Advanced':
-      return '#ef4444'; // Red
-    default:
-      return colors.text.secondary;
-  }
-};
-
 export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({ 
   onBackPress,
   onStartRoutine 
 }) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const insets = useSafeAreaInsets();
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Beginner':
+        return '#22c55e'; // Green
+      case 'Intermediate':
+        return '#f59e0b'; // Yellow/Orange
+      case 'Advanced':
+        return '#ef4444'; // Red
+      default:
+        return theme.text.secondary;
+    }
+  };
+
   const [routines, setRoutines] = useState<Routine[]>(routinesData as Routine[]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showExerciseModal, setShowExerciseModal] = useState(false);
@@ -206,21 +210,21 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
         
         <View style={styles.routineActions}>
           <TouchableOpacity 
-            style={[styles.actionButton, { backgroundColor: colors.surface }]}
+            style={[styles.actionButton, { backgroundColor: theme.surface }]}
             onPress={() => toggleRoutineActive(item.id)}
           >
             <Ionicons 
               name="play" 
               size={16} 
-              color={colors.text.primary} 
+              color={theme.text.primary} 
             />
           </TouchableOpacity>
           
           <TouchableOpacity 
-            style={[styles.actionButton, { backgroundColor: colors.error + '20' }]}
+            style={[styles.actionButton, { backgroundColor: theme.error + '20' }]}
             onPress={() => deleteRoutine(item.id)}
           >
-            <Ionicons name="trash-outline" size={16} color={colors.error} />
+            <Ionicons name="trash-outline" size={16} color={theme.error} />
           </TouchableOpacity>
         </View>
       </View>
@@ -265,7 +269,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
             <Ionicons 
               name={isSelected ? "checkmark-circle" : "add-circle-outline"} 
               size={24} 
-              color={isSelected ? colors.primary : colors.text.secondary} 
+              color={isSelected ? theme.primary : theme.text.secondary} 
             />
           </View>
         </View>
@@ -281,24 +285,24 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Rutinas</Text>
         <TouchableOpacity 
           style={styles.addButton}
           onPress={() => setShowCreateModal(true)}
         >
-          <Ionicons name="add" size={24} color={colors.background} />
+          <Ionicons name="add" size={24} color={theme.background} />
         </TouchableOpacity>
       </View>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
-        <Ionicons name="search" size={20} color={colors.text.secondary} style={styles.searchIcon} />
+        <Ionicons name="search" size={20} color={theme.text.secondary} style={styles.searchIcon} />
         <TextInput
           style={styles.searchInput}
           placeholder="Buscar rutinas..."
-          placeholderTextColor={colors.text.secondary}
+          placeholderTextColor={theme.text.secondary}
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
@@ -338,7 +342,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
                 value={newRoutineName}
                 onChangeText={setNewRoutineName}
                 placeholder="Ej: Push Day"
-                placeholderTextColor={colors.text.secondary}
+                placeholderTextColor={theme.text.secondary}
                 autoFocus
               />
             </View>
@@ -350,7 +354,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
                 value={newRoutineDescription}
                 onChangeText={setNewRoutineDescription}
                 placeholder="Describe tu rutina..."
-                placeholderTextColor={colors.text.secondary}
+                placeholderTextColor={theme.text.secondary}
                 multiline
                 numberOfLines={2}
               />
@@ -365,7 +369,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
                     style={[
                       styles.difficultyOption,
                       selectedDifficulty === difficulty && styles.difficultyOptionActive,
-                      { backgroundColor: selectedDifficulty === difficulty ? getDifficultyColor(difficulty) : colors.surface }
+                      { backgroundColor: selectedDifficulty === difficulty ? getDifficultyColor(difficulty) : theme.surface }
                     ]}
                     onPress={() => setSelectedDifficulty(difficulty)}
                   >
@@ -390,7 +394,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
                   style={styles.addExerciseButton}
                   onPress={() => setShowExerciseModal(true)}
                 >
-                  <Ionicons name="add" size={16} color={colors.primary} />
+                  <Ionicons name="add" size={16} color={theme.primary} />
                   <Text style={styles.addExerciseText}>Agregar</Text>
                 </TouchableOpacity>
               </View>
@@ -401,7 +405,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
                     <View key={exercise.id} style={styles.selectedExerciseItem}>
                       <Text style={styles.selectedExerciseName}>{exercise.name}</Text>
                       <TouchableOpacity onPress={() => removeExerciseFromRoutine(exercise.id)}>
-                        <Ionicons name="close-circle" size={20} color={colors.error} />
+                        <Ionicons name="close-circle" size={20} color={theme.error} />
                       </TouchableOpacity>
                     </View>
                   ))}
@@ -444,7 +448,7 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
             <View style={styles.exerciseModalHeader}>
               <Text style={styles.modalTitle}>Seleccionar Ejercicios</Text>
               <TouchableOpacity onPress={() => setShowExerciseModal(false)}>
-                <Ionicons name="close" size={24} color={colors.text.primary} />
+                <Ionicons name="close" size={24} color={theme.text.primary} />
               </TouchableOpacity>
             </View>
 
@@ -488,10 +492,10 @@ export const RoutinesScreen: React.FC<RoutinesScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
@@ -500,33 +504,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.surface,
+    borderBottomColor: theme.surface,
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
   headerTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   addButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     marginHorizontal: spacing.lg,
     marginTop: spacing.md,
     borderRadius: borderRadius.md,
@@ -539,7 +543,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: typography.sizes.base,
-    color: colors.text.primary,
+    color: theme.text.primary,
     paddingVertical: spacing.xs,
   },
   resultsContainer: {
@@ -549,14 +553,14 @@ const styles = StyleSheet.create({
   },
   resultsText: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   listContent: {
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.xl,
   },
   routineCard: {
-    backgroundColor: colors.cardBackground,
+    backgroundColor: theme.cardBackground,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     marginBottom: spacing.md,
@@ -574,7 +578,7 @@ const styles = StyleSheet.create({
   routineName: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.xs,
   },
   routineMeta: {
@@ -590,11 +594,11 @@ const styles = StyleSheet.create({
   difficultyText: {
     fontSize: typography.sizes.xs,
     fontWeight: typography.weights.semibold,
-    color: colors.background,
+    color: theme.background,
   },
   routineDuration: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   routineActions: {
     flexDirection: 'row',
@@ -609,7 +613,7 @@ const styles = StyleSheet.create({
   },
   routineDescription: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     lineHeight: 20,
     marginBottom: spacing.md,
   },
@@ -623,19 +627,19 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   muscleGroupChip: {
-    backgroundColor: colors.primary + '20',
+    backgroundColor: theme.primary + '20',
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
     borderRadius: 12,
   },
   muscleGroupText: {
     fontSize: typography.sizes.xs,
-    color: colors.primary,
+    color: theme.primary,
     fontWeight: typography.weights.medium,
   },
   moreGroups: {
     fontSize: typography.sizes.xs,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   routineStats: {
     flexDirection: 'row',
@@ -644,12 +648,12 @@ const styles = StyleSheet.create({
   },
   exerciseCount: {
     fontSize: typography.sizes.sm,
-    color: colors.text.primary,
+    color: theme.text.primary,
     fontWeight: typography.weights.medium,
   },
   lastPerformed: {
     fontSize: typography.sizes.xs,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   // Modal Styles
   modalOverlay: {
@@ -660,7 +664,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
   },
   modalContent: {
-    backgroundColor: colors.cardBackground,
+    backgroundColor: theme.cardBackground,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     width: '100%',
@@ -669,7 +673,7 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.lg,
     textAlign: 'center',
   },
@@ -679,15 +683,15 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.medium,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.sm,
   },
   input: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.md,
     padding: spacing.md,
     fontSize: typography.sizes.base,
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlignVertical: 'top',
   },
   exercisesHeader: {
@@ -703,12 +707,12 @@ const styles = StyleSheet.create({
   },
   addExerciseText: {
     fontSize: typography.sizes.sm,
-    color: colors.primary,
+    color: theme.primary,
     fontWeight: typography.weights.medium,
   },
   selectedExercisesList: {
     maxHeight: 120,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.md,
     padding: spacing.sm,
   },
@@ -718,16 +722,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: spacing.xs,
     borderBottomWidth: 1,
-    borderBottomColor: colors.background,
+    borderBottomColor: theme.background,
   },
   selectedExerciseName: {
     fontSize: typography.sizes.sm,
-    color: colors.text.primary,
+    color: theme.text.primary,
     flex: 1,
   },
   noExercisesText: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     fontStyle: 'italic',
     textAlign: 'center',
     paddingVertical: spacing.md,
@@ -740,31 +744,31 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     flex: 1,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.md,
     padding: spacing.md,
     alignItems: 'center',
   },
   cancelButtonText: {
     fontSize: typography.sizes.base,
-    color: colors.text.primary,
+    color: theme.text.primary,
     fontWeight: typography.weights.medium,
   },
   saveButton: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     borderRadius: borderRadius.md,
     padding: spacing.md,
     alignItems: 'center',
   },
   saveButtonText: {
     fontSize: typography.sizes.base,
-    color: colors.background,
+    color: theme.background,
     fontWeight: typography.weights.semibold,
   },
   // Exercise Modal Styles
   exerciseModalContent: {
-    backgroundColor: colors.cardBackground,
+    backgroundColor: theme.cardBackground,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     paddingTop: spacing.lg, // Espacio reducido en la parte superior
@@ -792,7 +796,7 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xl,
   },
   exerciseCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.md,
     padding: spacing.md,
     marginBottom: spacing.sm,
@@ -800,8 +804,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   exerciseCardSelected: {
-    borderColor: colors.primary,
-    backgroundColor: colors.primary + '10',
+    borderColor: theme.primary,
+    backgroundColor: theme.primary + '10',
   },
   exerciseHeader: {
     flexDirection: 'row',
@@ -812,7 +816,7 @@ const styles = StyleSheet.create({
   exerciseName: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     flex: 1,
   },
   exerciseActions: {
@@ -821,12 +825,12 @@ const styles = StyleSheet.create({
   muscleGroup: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.medium,
-    color: colors.primary,
+    color: theme.primary,
     marginBottom: spacing.xs,
   },
   exerciseDescription: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     lineHeight: 18,
   },
   // Modal Filter Styles
@@ -834,9 +838,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 25,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderWidth: 1,
-    borderColor: colors.surface,
+    borderColor: theme.surface,
     height: 44,
     justifyContent: 'center',
     alignItems: 'center',
@@ -844,17 +848,17 @@ const styles = StyleSheet.create({
     maxWidth: 120,
   },
   filterChipActive: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    backgroundColor: theme.primary,
+    borderColor: theme.primary,
   },
   filterChipText: {
     fontSize: 14,
     fontWeight: '500',
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
   } as any,
   filterChipTextActive: {
-    color: colors.background,
+    color: theme.background,
   },
   // Difficulty Selector Styles
   difficultySelector: {
@@ -870,7 +874,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: colors.surface,
+    borderColor: theme.surface,
     minHeight: 44,
   },
   difficultyOptionActive: {
@@ -879,12 +883,12 @@ const styles = StyleSheet.create({
   difficultyOptionText: {
     fontSize: typography.sizes.xs,
     fontWeight: typography.weights.medium,
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
     flexWrap: 'nowrap',
   },
   difficultyOptionTextActive: {
-    color: colors.background,
+    color: theme.background,
     fontWeight: typography.weights.semibold,
   },
 });

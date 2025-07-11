@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, typography, spacing } from '../constants/theme';
+import { typography, spacing } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface ProfileScreenProps {
   userName: string;
@@ -22,6 +23,9 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   userWeight = 75
 }) => {
   const insets = useSafeAreaInsets();
+  const { theme } = useTheme();
+  
+  const styles = createStyles(theme);
 
   const userInfo = {
     name: userName,
@@ -38,7 +42,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
       {/* Header con botón de regreso */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={onGoBack}>
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Mi Perfil</Text>
         <View style={styles.placeholder} />
@@ -77,7 +81,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           <Text style={styles.sectionTitle}>Información Personal</Text>
           
           <View style={styles.infoItem}>
-            <Ionicons name="person-outline" size={20} color={colors.text.secondary} />
+            <Ionicons name="person-outline" size={20} color={theme.text.secondary} />
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Nombre completo</Text>
               <Text style={styles.infoValue}>{userInfo.name}</Text>
@@ -85,7 +89,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           </View>
 
           <View style={styles.infoItem}>
-            <Ionicons name="mail-outline" size={20} color={colors.text.secondary} />
+            <Ionicons name="mail-outline" size={20} color={theme.text.secondary} />
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Email</Text>
               <Text style={styles.infoValue}>{userInfo.email}</Text>
@@ -93,7 +97,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           </View>
 
           <View style={styles.infoItem}>
-            <Ionicons name="call-outline" size={20} color={colors.text.secondary} />
+            <Ionicons name="call-outline" size={20} color={theme.text.secondary} />
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Teléfono</Text>
               <Text style={styles.infoValue}>{userInfo.phone}</Text>
@@ -101,7 +105,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           </View>
 
           <View style={styles.infoItem}>
-            <Ionicons name="calendar-outline" size={20} color={colors.text.secondary} />
+            <Ionicons name="calendar-outline" size={20} color={theme.text.secondary} />
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Miembro desde</Text>
               <Text style={styles.infoValue}>{userInfo.joinDate}</Text>
@@ -114,15 +118,15 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           <Text style={styles.sectionTitle}>Configuración</Text>
           
           <TouchableOpacity style={styles.settingItem} onPress={onOpenSettings}>
-            <Ionicons name="settings-outline" size={20} color={colors.text.secondary} />
+            <Ionicons name="settings-outline" size={20} color={theme.text.secondary} />
             <Text style={styles.settingText}>Configuración general</Text>
-            <Ionicons name="chevron-forward" size={20} color={colors.text.secondary} />
+            <Ionicons name="chevron-forward" size={20} color={theme.text.secondary} />
           </TouchableOpacity>
         </View>
 
         {/* Botón de cerrar sesión */}
         <TouchableOpacity style={styles.logoutButton}>
-          <Ionicons name="log-out-outline" size={20} color={colors.error} />
+          <Ionicons name="log-out-outline" size={20} color={theme.error} />
           <Text style={styles.logoutText}>Cerrar sesión</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -130,10 +134,10 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
@@ -142,20 +146,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.surface,
+    borderBottomColor: theme.surface,
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
   headerTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   placeholder: {
     width: 40,
@@ -172,7 +176,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing.md,
@@ -180,22 +184,22 @@ const styles = StyleSheet.create({
   avatarText: {
     fontSize: typography.sizes.xl,
     fontWeight: typography.weights.bold,
-    color: colors.background,
+    color: theme.background,
   },
   userName: {
     fontSize: typography.sizes.xl,
     fontWeight: typography.weights.bold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.xs,
   },
   userEmail: {
     fontSize: typography.sizes.base,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: 16,
     paddingVertical: spacing.lg,
     marginBottom: spacing.xl,
@@ -206,12 +210,12 @@ const styles = StyleSheet.create({
   statNumber: {
     fontSize: typography.sizes['2xl'],
     fontWeight: typography.weights.bold,
-    color: colors.primary,
+    color: theme.primary,
     marginBottom: spacing.xs,
   },
   statLabel: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   section: {
     marginBottom: spacing.xl,
@@ -219,13 +223,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.md,
   },
   infoItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: 12,
     padding: spacing.md,
     marginBottom: spacing.sm,
@@ -236,25 +240,25 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     marginBottom: spacing.xs,
   },
   infoValue: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.medium,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   settingItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: 12,
     padding: spacing.md,
     marginBottom: spacing.sm,
   },
   settingText: {
     fontSize: typography.sizes.base,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginLeft: spacing.md,
     flex: 1,
   },
@@ -270,7 +274,7 @@ const styles = StyleSheet.create({
   logoutText: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.medium,
-    color: colors.error,
+    color: theme.error,
     marginLeft: spacing.sm,
   },
 });

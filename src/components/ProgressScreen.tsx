@@ -15,7 +15,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { colors, typography, spacing } from '../constants/theme';
+import { typography, spacing } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface WeightEntry {
   id: string;
@@ -37,6 +38,9 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
 }) => {
   const insets = useSafeAreaInsets();
   const screenWidth = Dimensions.get('window').width;
+  const { theme } = useTheme();
+  
+  const styles = createStyles(theme);
   
   const [weightEntries, setWeightEntries] = useState<WeightEntry[]>([]);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -120,7 +124,7 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
         datasets: [{
           data: [0],
           strokeWidth: 2,
-          color: (opacity = 1) => `rgba(255, 215, 0, ${opacity})`, // Color dorado
+          color: (opacity = 1) => `${theme.primary}${Math.round(opacity * 255).toString(16).padStart(2, '0')}`, // Color del tema
         }]
       };
     }
@@ -140,7 +144,7 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
       datasets: [{
         data: sortedEntries.map(entry => entry.weight),
         strokeWidth: 3,
-        color: (opacity = 1) => `rgba(255, 215, 0, ${opacity})`, // Color dorado
+        color: (opacity = 1) => `${theme.primary}${Math.round(opacity * 255).toString(16).padStart(2, '0')}`, // Color del tema
       }]
     };
   };
@@ -171,14 +175,14 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={onGoBack}>
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Mi Progreso</Text>
         <TouchableOpacity 
           style={styles.addButton} 
           onPress={() => setShowAddModal(true)}
         >
-          <Ionicons name="add" size={24} color={colors.background} />
+          <Ionicons name="add" size={24} color={theme.background} />
         </TouchableOpacity>
       </View>
 
@@ -230,11 +234,11 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
               yAxisSuffix=" kg"
               yAxisInterval={1}
               chartConfig={{
-                backgroundColor: colors.surface,
-                backgroundGradientFrom: colors.surface,
-                backgroundGradientTo: colors.surface,
+                backgroundColor: theme.surface,
+                backgroundGradientFrom: theme.surface,
+                backgroundGradientTo: theme.surface,
                 decimalPlaces: 1,
-                color: (opacity = 1) => `rgba(255, 215, 0, ${opacity})`, // Color dorado
+                color: (opacity = 1) => `${theme.primary}${Math.round(opacity * 255).toString(16).padStart(2, '0')}`, // Color del tema
                 labelColor: (opacity = 1) => `rgba(160, 160, 160, ${opacity})`,
                 style: {
                   borderRadius: 16
@@ -242,8 +246,8 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
                 propsForDots: {
                   r: '6',
                   strokeWidth: '2',
-                  stroke: colors.primary,
-                  fill: colors.primary
+                  stroke: theme.primary,
+                  fill: theme.primary
                 },
                 propsForBackgroundLines: {
                   strokeDasharray: '', // solid background lines
@@ -280,14 +284,14 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
                 style={styles.deleteButton}
                 onPress={() => deleteEntry(entry.id)}
               >
-                <Ionicons name="trash-outline" size={18} color={colors.error} />
+                <Ionicons name="trash-outline" size={18} color={theme.error} />
               </TouchableOpacity>
             </View>
           ))}
           
           {weightEntries.length === 0 && (
             <View style={styles.emptyRecords}>
-              <Ionicons name="analytics-outline" size={48} color={colors.text.secondary} />
+              <Ionicons name="analytics-outline" size={48} color={theme.text.secondary} />
               <Text style={styles.emptyRecordsText}>No hay registros de peso</Text>
               <Text style={styles.emptyRecordsSubtext}>
                 Toca el botón "+" para agregar tu primer registro
@@ -315,7 +319,7 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
                 value={newWeight}
                 onChangeText={setNewWeight}
                 placeholder="Ej: 75.5"
-                placeholderTextColor={colors.text.secondary}
+                placeholderTextColor={theme.text.secondary}
                 keyboardType="numeric"
                 autoFocus
               />
@@ -328,7 +332,7 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
                 onPress={() => setShowDatePicker(true)}
               >
                 <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
-                <Ionicons name="calendar-outline" size={20} color={colors.text.secondary} />
+                <Ionicons name="calendar-outline" size={20} color={theme.text.secondary} />
               </TouchableOpacity>
             </View>
 
@@ -374,10 +378,10 @@ export const ProgressScreen: React.FC<ProgressScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
@@ -386,26 +390,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.surface,
+    borderBottomColor: theme.surface,
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
   headerTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   addButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -420,7 +424,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: 12,
     padding: spacing.md,
     marginHorizontal: spacing.xs,
@@ -429,25 +433,25 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: typography.sizes.xl,
     fontWeight: typography.weights.bold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.xs,
   },
   statLabel: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
   },
   positiveChange: {
-    color: colors.success,
+    color: theme.success,
   },
   negativeChange: {
-    color: colors.error,
+    color: theme.error,
   },
   neutralChange: {
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   chartContainer: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: 16,
     padding: spacing.md,
     marginBottom: spacing.lg,
@@ -455,7 +459,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.md,
   },
   chart: {
@@ -463,7 +467,7 @@ const styles = StyleSheet.create({
   },
   emptyChartText: {
     textAlign: 'center',
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     fontSize: typography.sizes.sm,
     fontStyle: 'italic',
     marginTop: spacing.md,
@@ -475,7 +479,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: 12,
     padding: spacing.md,
     marginBottom: spacing.sm,
@@ -486,12 +490,12 @@ const styles = StyleSheet.create({
   recordWeight: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.xs,
   },
   recordDate: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   deleteButton: {
     padding: spacing.sm,
@@ -500,19 +504,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: spacing.xl,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: 12,
   },
   emptyRecordsText: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.medium,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     marginTop: spacing.md,
     marginBottom: spacing.xs,
   },
   emptyRecordsSubtext: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
   },
   modalOverlay: {
@@ -522,7 +526,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
     borderRadius: 16,
     padding: spacing.lg,
     width: '90%',
@@ -531,7 +535,7 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
     marginBottom: spacing.lg,
   },
@@ -541,31 +545,31 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.medium,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.sm,
   },
   input: {
     borderWidth: 1,
-    borderColor: colors.surface,
+    borderColor: theme.surface,
     borderRadius: 8,
     padding: spacing.md,
     fontSize: typography.sizes.base,
-    color: colors.text.primary,
-    backgroundColor: colors.surface,
+    color: theme.text.primary,
+    backgroundColor: theme.surface,
   },
   dateInput: {
     borderWidth: 1,
-    borderColor: colors.surface,
+    borderColor: theme.surface,
     borderRadius: 8,
     padding: spacing.md,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   dateText: {
     fontSize: typography.sizes.base,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   datePickerButtons: {
     flexDirection: 'row',
@@ -573,13 +577,13 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
   },
   datePickerButton: {
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
     borderRadius: 8,
   },
   datePickerButtonText: {
-    color: colors.background,
+    color: theme.background,
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.medium,
   },
@@ -593,25 +597,25 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     borderRadius: 8,
     marginRight: spacing.sm,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     alignItems: 'center',
   },
   cancelButtonText: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.medium,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   saveButton: {
     flex: 1,
     padding: spacing.md,
     borderRadius: 8,
     marginLeft: spacing.sm,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     alignItems: 'center',
   },
   saveButtonText: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.medium,
-    color: colors.background,
+    color: theme.background,
   },
 });

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, typography, spacing } from '../constants/theme';
+import { typography, spacing } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface SettingsScreenProps {
   onGoBack: () => void;
@@ -14,14 +15,16 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
   onEditProfile
 }) => {
   const insets = useSafeAreaInsets();
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { theme, isDarkMode, toggleTheme } = useTheme();
+
+  const styles = createStyles(theme);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       {/* Header con botón de regreso */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={onGoBack}>
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Configuración General</Text>
         <View style={styles.placeholder} />
@@ -33,9 +36,9 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
           <Text style={styles.sectionTitle}>Perfil</Text>
           
           <TouchableOpacity style={styles.settingItem} onPress={onEditProfile}>
-            <Ionicons name="person-outline" size={20} color={colors.text.secondary} />
+            <Ionicons name="person-outline" size={20} color={theme.text.secondary} />
             <Text style={styles.settingText}>Editar datos del perfil</Text>
-            <Ionicons name="chevron-forward" size={20} color={colors.text.secondary} />
+            <Ionicons name="chevron-forward" size={20} color={theme.text.secondary} />
           </TouchableOpacity>
         </View>
 
@@ -44,13 +47,13 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
           <Text style={styles.sectionTitle}>Apariencia</Text>
           
           <View style={styles.settingItem}>
-            <Ionicons name="moon-outline" size={20} color={colors.text.secondary} />
+            <Ionicons name="moon-outline" size={20} color={theme.text.secondary} />
             <Text style={styles.settingText}>Modo oscuro</Text>
             <Switch
-              trackColor={{ false: colors.surface, true: colors.primary }}
-              thumbColor={isDarkMode ? colors.background : colors.text.secondary}
-              ios_backgroundColor={colors.surface}
-              onValueChange={setIsDarkMode}
+              trackColor={{ false: theme.surface, true: theme.primary }}
+              thumbColor={isDarkMode ? theme.primary : theme.text.secondary}
+              ios_backgroundColor={theme.surface}
+              onValueChange={toggleTheme}
               value={isDarkMode}
             />
           </View>
@@ -61,15 +64,15 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
           <Text style={styles.sectionTitle}>Configuración</Text>
           
           <TouchableOpacity style={styles.settingItem}>
-            <Ionicons name="notifications-outline" size={20} color={colors.text.secondary} />
+            <Ionicons name="notifications-outline" size={20} color={theme.text.secondary} />
             <Text style={styles.settingText}>Notificaciones</Text>
-            <Ionicons name="chevron-forward" size={20} color={colors.text.secondary} />
+            <Ionicons name="chevron-forward" size={20} color={theme.text.secondary} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.settingItem}>
-            <Ionicons name="shield-outline" size={20} color={colors.text.secondary} />
+            <Ionicons name="shield-outline" size={20} color={theme.text.secondary} />
             <Text style={styles.settingText}>Privacidad</Text>
-            <Ionicons name="chevron-forward" size={20} color={colors.text.secondary} />
+            <Ionicons name="chevron-forward" size={20} color={theme.text.secondary} />
           </TouchableOpacity>
         </View>
 
@@ -78,9 +81,9 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
           <Text style={styles.sectionTitle}>Soporte</Text>
           
           <TouchableOpacity style={styles.settingItem}>
-            <Ionicons name="help-circle-outline" size={20} color={colors.text.secondary} />
+            <Ionicons name="help-circle-outline" size={20} color={theme.text.secondary} />
             <Text style={styles.settingText}>Ayuda y soporte</Text>
-            <Ionicons name="chevron-forward" size={20} color={colors.text.secondary} />
+            <Ionicons name="chevron-forward" size={20} color={theme.text.secondary} />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -88,10 +91,10 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
@@ -100,20 +103,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.surface,
+    borderBottomColor: theme.surface,
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
   headerTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   placeholder: {
     width: 40,
@@ -129,20 +132,20 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.md,
   },
   settingItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: 12,
     padding: spacing.md,
     marginBottom: spacing.sm,
   },
   settingText: {
     fontSize: typography.sizes.base,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginLeft: spacing.md,
     flex: 1,
   },

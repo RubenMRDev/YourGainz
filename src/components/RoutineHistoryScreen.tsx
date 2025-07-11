@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, spacing, typography, borderRadius } from '../constants/theme';
+import { spacing, typography, borderRadius } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 import { RoutineHistory } from '../types/history';
 
 interface RoutineHistoryScreenProps {
@@ -23,6 +24,8 @@ export const RoutineHistoryScreen: React.FC<RoutineHistoryScreenProps> = ({
   onViewRoutineDetail,
   routineHistory 
 }) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const insets = useSafeAreaInsets();
 
   const formatDate = (dateString: string) => {
@@ -48,13 +51,13 @@ export const RoutineHistoryScreen: React.FC<RoutineHistoryScreenProps> = ({
 
   const getCompletionIcon = (percentage: number) => {
     if (percentage === 100) {
-      return { icon: 'checkmark-circle', color: colors.success };
+      return { icon: 'checkmark-circle', color: theme.success };
     } else if (percentage >= 75) {
-      return { icon: 'checkmark-circle-outline', color: colors.primary };
+      return { icon: 'checkmark-circle-outline', color: theme.primary };
     } else if (percentage >= 50) {
-      return { icon: 'remove-circle-outline', color: colors.primary };
+      return { icon: 'remove-circle-outline', color: theme.primary };
     } else {
-      return { icon: 'close-circle-outline', color: colors.error };
+      return { icon: 'close-circle-outline', color: theme.error };
     }
   };
 
@@ -123,7 +126,7 @@ export const RoutineHistoryScreen: React.FC<RoutineHistoryScreenProps> = ({
           <Text style={styles.routineDescription} numberOfLines={1}>
             {item.routineDescription}
           </Text>
-          <Ionicons name="chevron-forward" size={16} color={colors.text.secondary} />
+          <Ionicons name="chevron-forward" size={16} color={theme.text.secondary} />
         </View>
       </TouchableOpacity>
     );
@@ -131,7 +134,7 @@ export const RoutineHistoryScreen: React.FC<RoutineHistoryScreenProps> = ({
 
   const renderEmptyState = () => (
     <View style={styles.emptyContainer}>
-      <Ionicons name="time-outline" size={64} color={colors.text.secondary} />
+      <Ionicons name="time-outline" size={64} color={theme.text.secondary} />
       <Text style={styles.emptyTitle}>No hay historial</Text>
       <Text style={styles.emptySubtitle}>
         Completa tu primera rutina para ver el historial aquí
@@ -171,7 +174,7 @@ export const RoutineHistoryScreen: React.FC<RoutineHistoryScreenProps> = ({
           <View style={styles.overviewStat}>
             <Text style={[
               styles.overviewStatValue,
-              { color: completionRate >= 75 ? colors.success : colors.primary }
+              { color: completionRate >= 75 ? theme.success : theme.primary }
             ]}>
               {completionRate}%
             </Text>
@@ -187,7 +190,7 @@ export const RoutineHistoryScreen: React.FC<RoutineHistoryScreenProps> = ({
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={onGoBack}>
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Historial de Rutinas</Text>
         <View style={styles.placeholder} />
@@ -219,10 +222,10 @@ export const RoutineHistoryScreen: React.FC<RoutineHistoryScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
@@ -231,20 +234,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.surface,
+    borderBottomColor: theme.surface,
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
   headerTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   placeholder: {
     width: 40,
@@ -254,7 +257,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
   },
   statsOverview: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     marginVertical: spacing.lg,
@@ -262,7 +265,7 @@ const styles = StyleSheet.create({
   statsTitle: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.md,
     textAlign: 'center',
   },
@@ -276,24 +279,24 @@ const styles = StyleSheet.create({
   overviewStatValue: {
     fontSize: typography.sizes.xl,
     fontWeight: typography.weights.bold,
-    color: colors.primary,
+    color: theme.primary,
     marginBottom: spacing.xs,
   },
   overviewStatLabel: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   sectionTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.md,
   },
   listContainer: {
     paddingBottom: spacing.xl,
   },
   historyCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     marginBottom: spacing.md,
@@ -310,12 +313,12 @@ const styles = StyleSheet.create({
   routineName: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.xs,
   },
   routineDate: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   completionContainer: {
     marginLeft: spacing.md,
@@ -331,19 +334,19 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.xs / 2,
   },
   statLabel: {
     fontSize: typography.sizes.xs,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   progressBarContainer: {
     marginBottom: spacing.md,
   },
   progressBarBackground: {
     height: 4,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
     borderRadius: 2,
     overflow: 'hidden',
   },
@@ -359,7 +362,7 @@ const styles = StyleSheet.create({
   routineDescription: {
     flex: 1,
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     marginRight: spacing.sm,
   },
   emptyContainer: {
@@ -371,13 +374,13 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: typography.sizes.xl,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginTop: spacing.lg,
     marginBottom: spacing.sm,
   },
   emptySubtitle: {
     fontSize: typography.sizes.base,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
     lineHeight: 24,
   },
@@ -385,7 +388,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: spacing.sm,
@@ -398,7 +401,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
   },
   actionModal: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     width: '80%',
@@ -407,7 +410,7 @@ const styles = StyleSheet.create({
   actionModalTitle: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
     marginBottom: spacing.lg,
   },
@@ -421,7 +424,7 @@ const styles = StyleSheet.create({
   },
   actionButtonText: {
     fontSize: typography.sizes.base,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginLeft: spacing.md,
     fontWeight: typography.weights.medium,
   },

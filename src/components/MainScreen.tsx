@@ -6,7 +6,8 @@ import { WelcomeSection } from './WelcomeSection';
 import { MenuSection } from './MenuSection';
 import { createMenuOptions } from '../utils/menuOptions';
 import { NavigationRoute } from '../types';
-import { colors, spacing } from '../constants/theme';
+import { spacing } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface MainScreenProps {
   userName?: string;
@@ -22,6 +23,9 @@ export const MainScreen: React.FC<MainScreenProps> = ({
   onTrainingPress
 }) => {
   const insets = useSafeAreaInsets();
+  const { theme } = useTheme();
+  
+  const styles = createStyles(theme);
   
   const handleNavigation = (route: NavigationRoute) => {
     switch (route) {
@@ -46,7 +50,7 @@ export const MainScreen: React.FC<MainScreenProps> = ({
     }
   };
 
-  const menuOptions = createMenuOptions(handleNavigation);
+  const menuOptions = createMenuOptions(handleNavigation, theme);
 
   return (
     <View style={[styles.container, { paddingBottom: insets.bottom }]}>
@@ -57,9 +61,9 @@ export const MainScreen: React.FC<MainScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
 });

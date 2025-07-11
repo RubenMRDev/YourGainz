@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, spacing, typography, borderRadius } from '../constants/theme';
+import { spacing, typography, borderRadius } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 import exercisesData from '../data/exercises.json';
 
 interface Exercise {
@@ -29,24 +30,26 @@ interface ExercisesListScreenProps {
 
 const muscleGroups = ['All', 'Chest', 'Back', 'Legs', 'Shoulders', 'Arms', 'Core'];
 
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty) {
-    case 'Beginner':
-      return '#22c55e'; // Green
-    case 'Intermediate':
-      return '#f59e0b'; // Yellow/Orange
-    case 'Advanced':
-      return '#ef4444'; // Red
-    default:
-      return colors.text.secondary;
-  }
-};
-
 export const ExercisesListScreen: React.FC<ExercisesListScreenProps> = ({ 
   onBackPress 
 }) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState('');
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Beginner':
+        return '#22c55e'; // Green
+      case 'Intermediate':
+        return '#f59e0b'; // Yellow/Orange
+      case 'Advanced':
+        return '#ef4444'; // Red
+      default:
+        return theme.text.secondary;
+    }
+  };
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState('All');
 
   const filteredExercises = useMemo(() => {
@@ -88,7 +91,7 @@ export const ExercisesListScreen: React.FC<ExercisesListScreenProps> = ({
       
       <View style={styles.exerciseFooter}>
         <View style={styles.equipmentContainer}>
-          <Ionicons name="fitness" size={16} color={colors.text.secondary} />
+          <Ionicons name="fitness" size={16} color={theme.text.secondary} />
           <Text style={styles.equipmentText}>{item.equipment}</Text>
         </View>
         <Text style={styles.additionalMuscles}>
@@ -103,7 +106,7 @@ export const ExercisesListScreen: React.FC<ExercisesListScreenProps> = ({
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Exercises</Text>
         <View style={styles.invisiblePlaceholder} />
@@ -111,11 +114,11 @@ export const ExercisesListScreen: React.FC<ExercisesListScreenProps> = ({
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
-        <Ionicons name="search" size={20} color={colors.text.secondary} style={styles.searchIcon} />
+        <Ionicons name="search" size={20} color={theme.text.secondary} style={styles.searchIcon} />
         <TextInput
           style={styles.searchInput}
           placeholder="Search exercises..."
-          placeholderTextColor={colors.text.secondary}
+          placeholderTextColor={theme.text.secondary}
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
@@ -168,10 +171,10 @@ export const ExercisesListScreen: React.FC<ExercisesListScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
@@ -180,38 +183,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.surface,
+    borderBottomColor: theme.surface,
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
   headerTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   invisiblePlaceholder: {
     width: 40,
     height: 40,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   filterButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     marginHorizontal: spacing.lg,
     marginTop: spacing.md,
     borderRadius: borderRadius.md,
@@ -224,7 +227,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: typography.sizes.base,
-    color: colors.text.primary,
+    color: theme.text.primary,
     paddingVertical: spacing.xs,
   },
   filtersWrapper: {
@@ -247,9 +250,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 25,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderWidth: 1,
-    borderColor: colors.surface,
+    borderColor: theme.surface,
     height: 44,
     justifyContent: 'center',
     alignItems: 'center',
@@ -257,17 +260,17 @@ const styles = StyleSheet.create({
     maxWidth: 120, // Added maximum width for consistency
   },
   filterChipActive: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    backgroundColor: theme.primary,
+    borderColor: theme.primary,
   },
   filterChipText: {
     fontSize: 14,
     fontWeight: '500',
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
   } as any,
   filterChipTextActive: {
-    color: colors.background,
+    color: theme.background,
   },
   resultsContainer: {
     paddingHorizontal: spacing.lg,
@@ -276,14 +279,14 @@ const styles = StyleSheet.create({
   },
   resultsText: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   listContent: {
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.xl * 2, // Más espacio para evitar cortes en la parte inferior
   },
   exerciseCard: {
-    backgroundColor: colors.cardBackground,
+    backgroundColor: theme.cardBackground,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     marginBottom: spacing.md,
@@ -297,7 +300,7 @@ const styles = StyleSheet.create({
   exerciseName: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     flex: 1,
     marginRight: spacing.sm,
   },
@@ -309,17 +312,17 @@ const styles = StyleSheet.create({
   difficultyText: {
     fontSize: typography.sizes.xs,
     fontWeight: typography.weights.semibold,
-    color: colors.background,
+    color: theme.background,
   },
   muscleGroup: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.medium,
-    color: colors.primary,
+    color: theme.primary,
     marginBottom: spacing.sm,
   },
   exerciseDescription: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     lineHeight: 20,
     marginBottom: spacing.md,
   },
@@ -335,10 +338,10 @@ const styles = StyleSheet.create({
   },
   equipmentText: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   additionalMuscles: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
 });

@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, spacing, typography, borderRadius } from '../constants/theme';
+import { spacing, typography, borderRadius } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 import { RoutineHistory, CompletedExercise } from '../types/history';
 
 interface EditRoutineHistoryScreenProps {
@@ -25,6 +26,8 @@ export const EditRoutineHistoryScreen: React.FC<EditRoutineHistoryScreenProps> =
   onGoBack, 
   onSave 
 }) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const insets = useSafeAreaInsets();
   const [editedHistory, setEditedHistory] = useState<RoutineHistory>({ ...routineHistory });
   const [showTimeModal, setShowTimeModal] = useState(false);
@@ -139,7 +142,7 @@ export const EditRoutineHistoryScreen: React.FC<EditRoutineHistoryScreenProps> =
             <Ionicons 
               name={exercise.completed ? "checkmark" : "ellipse-outline"} 
               size={20} 
-              color={exercise.completed ? colors.background : colors.text.secondary} 
+              color={exercise.completed ? theme.background : theme.text.secondary} 
             />
           </TouchableOpacity>
         </View>
@@ -155,7 +158,7 @@ export const EditRoutineHistoryScreen: React.FC<EditRoutineHistoryScreenProps> =
               <Ionicons 
                 name="remove" 
                 size={16} 
-                color={exercise.completedSets === 0 ? colors.text.secondary : colors.primary} 
+                color={exercise.completedSets === 0 ? theme.text.secondary : theme.primary} 
               />
             </TouchableOpacity>
             <Text style={styles.setsCount}>
@@ -169,7 +172,7 @@ export const EditRoutineHistoryScreen: React.FC<EditRoutineHistoryScreenProps> =
               <Ionicons 
                 name="add" 
                 size={16} 
-                color={exercise.completedSets >= exercise.totalSets ? colors.text.secondary : colors.primary} 
+                color={exercise.completedSets >= exercise.totalSets ? theme.text.secondary : theme.primary} 
               />
             </TouchableOpacity>
           </View>
@@ -183,7 +186,7 @@ export const EditRoutineHistoryScreen: React.FC<EditRoutineHistoryScreenProps> =
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={onGoBack}>
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Editar Rutina</Text>
         <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
@@ -205,7 +208,7 @@ export const EditRoutineHistoryScreen: React.FC<EditRoutineHistoryScreenProps> =
             <Text style={styles.durationLabel}>Duración:</Text>
             <View style={styles.durationValue}>
               <Text style={styles.durationText}>{editedHistory.duration}</Text>
-              <Ionicons name="create-outline" size={16} color={colors.primary} />
+              <Ionicons name="create-outline" size={16} color={theme.primary} />
             </View>
           </TouchableOpacity>
         </View>
@@ -234,7 +237,7 @@ export const EditRoutineHistoryScreen: React.FC<EditRoutineHistoryScreenProps> =
             <View style={styles.previewStat}>
               <Text style={[
                 styles.previewStatValue,
-                { color: Math.round((editedHistory.exercises.filter(ex => ex.completed).length / editedHistory.totalExercises) * 100) === 100 ? colors.success : colors.primary }
+                { color: Math.round((editedHistory.exercises.filter(ex => ex.completed).length / editedHistory.totalExercises) * 100) === 100 ? theme.success : theme.primary }
               ]}>
                 {Math.round((editedHistory.exercises.filter(ex => ex.completed).length / editedHistory.totalExercises) * 100)}%
               </Text>
@@ -263,7 +266,7 @@ export const EditRoutineHistoryScreen: React.FC<EditRoutineHistoryScreenProps> =
               value={tempDuration}
               onChangeText={setTempDuration}
               placeholder="00:00"
-              placeholderTextColor={colors.text.secondary}
+              placeholderTextColor={theme.text.secondary}
               keyboardType="numeric"
               maxLength={5}
             />
@@ -293,10 +296,10 @@ export const EditRoutineHistoryScreen: React.FC<EditRoutineHistoryScreenProps> =
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
@@ -305,38 +308,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.surface,
+    borderBottomColor: theme.surface,
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
   headerTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   saveButton: {
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     borderRadius: borderRadius.md,
   },
   saveButtonText: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.semibold,
-    color: colors.background,
+    color: theme.background,
   },
   content: {
     flex: 1,
     paddingHorizontal: spacing.lg,
   },
   infoCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     marginVertical: spacing.lg,
@@ -344,18 +347,18 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.md,
   },
   routineName: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.bold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.xs,
   },
   routineDate: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     marginBottom: spacing.lg,
     textTransform: 'capitalize',
   },
@@ -367,7 +370,7 @@ const styles = StyleSheet.create({
   },
   durationLabel: {
     fontSize: typography.sizes.base,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   durationValue: {
     flexDirection: 'row',
@@ -377,7 +380,7 @@ const styles = StyleSheet.create({
   durationText: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   exercisesSection: {
     marginBottom: spacing.lg,
@@ -385,11 +388,11 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.md,
   },
   exerciseCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.md,
     padding: spacing.md,
     marginBottom: spacing.sm,
@@ -397,8 +400,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   exerciseCardCompleted: {
-    borderColor: colors.success + '40',
-    backgroundColor: colors.success + '10',
+    borderColor: theme.success + '40',
+    backgroundColor: theme.success + '10',
   },
   exerciseHeader: {
     flexDirection: 'row',
@@ -409,7 +412,7 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: spacing.md,
@@ -417,7 +420,7 @@ const styles = StyleSheet.create({
   exerciseNumberText: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.bold,
-    color: colors.background,
+    color: theme.background,
   },
   exerciseInfo: {
     flex: 1,
@@ -425,29 +428,29 @@ const styles = StyleSheet.create({
   exerciseName: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.xs,
   },
   exerciseNameCompleted: {
-    color: colors.success,
+    color: theme.success,
   },
   exerciseDetails: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   completeToggle: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: colors.text.secondary,
+    borderColor: theme.text.secondary,
   },
   completeToggleActive: {
-    backgroundColor: colors.success,
-    borderColor: colors.success,
+    backgroundColor: theme.success,
+    borderColor: theme.success,
   },
   setsEditor: {
     flexDirection: 'row',
@@ -455,11 +458,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: spacing.sm,
     borderTopWidth: 1,
-    borderTopColor: colors.background,
+    borderTopColor: theme.background,
   },
   setsLabel: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     fontWeight: typography.weights.medium,
   },
   setsControls: {
@@ -471,19 +474,19 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
     justifyContent: 'center',
     alignItems: 'center',
   },
   setsCount: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     minWidth: 50,
     textAlign: 'center',
   },
   statsPreview: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     marginBottom: spacing.lg,
@@ -498,12 +501,12 @@ const styles = StyleSheet.create({
   previewStatValue: {
     fontSize: typography.sizes.xl,
     fontWeight: typography.weights.bold,
-    color: colors.primary,
+    color: theme.primary,
     marginBottom: spacing.xs,
   },
   previewStatLabel: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   bottomPadding: {
     height: spacing.xl,
@@ -516,7 +519,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
   },
   timeModal: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     width: '80%',
@@ -525,22 +528,22 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
     marginBottom: spacing.sm,
   },
   modalSubtitle: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
     marginBottom: spacing.lg,
   },
   timeInput: {
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
     borderRadius: borderRadius.md,
     padding: spacing.md,
     fontSize: typography.sizes.lg,
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
     marginBottom: spacing.lg,
   },
@@ -551,25 +554,25 @@ const styles = StyleSheet.create({
   modalCancelButton: {
     flex: 1,
     paddingVertical: spacing.md,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
     borderRadius: borderRadius.md,
     alignItems: 'center',
   },
   modalCancelText: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.medium,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   modalSaveButton: {
     flex: 1,
     paddingVertical: spacing.md,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     borderRadius: borderRadius.md,
     alignItems: 'center',
   },
   modalSaveText: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.background,
+    color: theme.background,
   },
 });

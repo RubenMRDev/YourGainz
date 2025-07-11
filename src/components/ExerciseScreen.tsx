@@ -4,7 +4,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { MenuSection } from './MenuSection';
 import { MenuOption } from '../types';
-import { colors, spacing, typography } from '../constants/theme';
+import { spacing, typography } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 
 type ExerciseNavigationRoute = 
   | 'Routines'
@@ -29,6 +30,8 @@ export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({
   onHistoryPress
 }) => {
   const insets = useSafeAreaInsets();
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   
   const handleNavigation = (route: ExerciseNavigationRoute) => {
     switch (route) {
@@ -81,7 +84,7 @@ export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({
       title: 'Rutinas',
       subtitle: 'Gestiona tus rutinas de entrenamiento',
       icon: 'list',
-      color: colors.primary,
+      color: theme.primary,
       onPress: () => handleNavigation('Routines'),
     },
     {
@@ -89,7 +92,7 @@ export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({
       title: 'Ejercicios',
       subtitle: 'Explora nuestra biblioteca de ejercicios',
       icon: 'fitness-center',
-      color: colors.primary,
+      color: theme.primary,
       onPress: () => handleNavigation('Exercises'),
     },
     {
@@ -97,7 +100,7 @@ export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({
       title: 'Historial',
       subtitle: 'Revisa tu historial de entrenamientos',
       icon: 'history',
-      color: colors.primary,
+      color: theme.primary,
       onPress: () => handleNavigation('History'),
     },
   ];
@@ -107,7 +110,7 @@ export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Entrenamiento</Text>
         <TouchableOpacity 
@@ -146,10 +149,10 @@ export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
@@ -158,33 +161,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.surface,
+    borderBottomColor: theme.surface,
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
   headerTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   profileButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   profileText: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.semibold,
-    color: colors.background,
+    color: theme.background,
   },
   statsContainer: {
     flexDirection: 'row',
@@ -195,7 +198,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: colors.cardBackground,
+    backgroundColor: theme.cardBackground,
     borderRadius: 12,
     padding: spacing.lg,
     alignItems: 'center',
@@ -205,13 +208,13 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: typography.sizes['2xl'],
     fontWeight: typography.weights.bold,
-    color: colors.primary,
+    color: theme.primary,
     marginBottom: spacing.xs,
   },
   statLabel: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.medium,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
     lineHeight: 18,
   },
@@ -222,6 +225,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
 });

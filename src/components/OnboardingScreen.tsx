@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, typography, spacing } from '../constants/theme';
+import { typography, spacing } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 
 const { width, height } = Dimensions.get('window');
 
@@ -26,37 +27,40 @@ interface SlideData {
   backgroundColor: string;
 }
 
-const slides: SlideData[] = [
-  {
-    id: 1,
-    title: "Bienvenido a YourGainz",
-    subtitle: "Tu compañero de fitness personal",
-    description: "Transforma tu rutina de ejercicios y alcanza tus metas de fitness con nuestra app completa de entrenamiento.",
-    icon: "fitness-outline",
-    backgroundColor: "#1a1a1a"
-  },
-  {
-    id: 2,
-    title: "Seguimiento de Progreso",
-    subtitle: "Visualiza tu evolución",
-    description: "Registra tu peso, mide tu progreso y visualiza tu evolución con gráficas detalladas y estadísticas personalizadas.",
-    icon: "analytics-outline",
-    backgroundColor: "#1a1a1a"
-  },
-  {
-    id: 3,
-    title: "Comenzar",
-    subtitle: "Únete a la comunidad",
-    description: "Inicia tu viaje hacia una vida más saludable. Regístrate y comienza a transformar tu cuerpo hoy mismo.",
-    icon: "rocket-outline",
-    backgroundColor: "#1a1a1a"
-  }
-];
-
 export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const insets = useSafeAreaInsets();
   const scrollViewRef = React.useRef<ScrollView>(null);
+  const { theme } = useTheme();
+  
+  const styles = createStyles(theme);
+
+  const slides: SlideData[] = [
+    {
+      id: 1,
+      title: "Bienvenido a YourGainz",
+      subtitle: "Tu compañero de fitness personal",
+      description: "Transforma tu rutina de ejercicios y alcanza tus metas de fitness con nuestra app completa de entrenamiento.",
+      icon: "fitness-outline",
+      backgroundColor: theme.background
+    },
+    {
+      id: 2,
+      title: "Seguimiento de Progreso",
+      subtitle: "Visualiza tu evolución",
+      description: "Registra tu peso, mide tu progreso y visualiza tu evolución con gráficas detalladas y estadísticas personalizadas.",
+      icon: "analytics-outline",
+      backgroundColor: theme.background
+    },
+    {
+      id: 3,
+      title: "Comenzar",
+      subtitle: "Únete a la comunidad",
+      description: "Inicia tu viaje hacia una vida más saludable. Regístrate y comienza a transformar tu cuerpo hoy mismo.",
+      icon: "rocket-outline",
+      backgroundColor: theme.background
+    }
+  ];
 
   const nextSlide = () => {
     if (currentSlide < slides.length - 1) {
@@ -94,7 +98,7 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
               <Ionicons 
                 name={slide.icon as any} 
                 size={120} 
-                color={colors.primary} 
+                color={theme.primary} 
               />
             </View>
 
@@ -118,7 +122,7 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
               style={[
                 styles.dot,
                 {
-                  backgroundColor: index === currentSlide ? colors.primary : colors.text.secondary,
+                  backgroundColor: index === currentSlide ? theme.primary : theme.text.secondary,
                   opacity: index === currentSlide ? 1 : 0.3,
                 }
               ]}
@@ -131,11 +135,11 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
           {currentSlide < slides.length - 1 ? (
             <>
               <Text style={styles.nextButtonText}>Siguiente</Text>
-              <Ionicons name="chevron-forward" size={24} color={colors.background} />
+              <Ionicons name="chevron-forward" size={24} color={theme.background} />
             </>
           ) : (
             <>
-              <Ionicons name="logo-google" size={24} color={colors.background} />
+              <Ionicons name="logo-google" size={24} color={theme.background} />
               <Text style={styles.nextButtonText}>Registrarse con Google</Text>
             </>
           )}
@@ -152,10 +156,10 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   scrollView: {
     flex: 1,
@@ -180,20 +184,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: typography.sizes['3xl'],
     fontWeight: typography.weights.bold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
     marginBottom: spacing.md,
   },
   subtitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.medium,
-    color: colors.primary,
+    color: theme.primary,
     textAlign: 'center',
     marginBottom: spacing.lg,
   },
   description: {
     fontSize: typography.sizes.base,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
     lineHeight: 24,
     maxWidth: width * 0.8,
@@ -216,7 +220,7 @@ const styles = StyleSheet.create({
   nextButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     paddingHorizontal: spacing.xl,
     paddingVertical: spacing.md,
     borderRadius: 25,
@@ -224,7 +228,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   nextButtonText: {
-    color: colors.background,
+    color: theme.background,
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
     marginHorizontal: spacing.sm,

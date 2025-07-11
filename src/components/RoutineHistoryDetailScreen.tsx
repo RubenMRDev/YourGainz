@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, spacing, typography, borderRadius } from '../constants/theme';
+import { spacing, typography, borderRadius } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 import { RoutineHistory, CompletedExercise } from '../types/history';
 
 interface RoutineHistoryDetailScreenProps {
@@ -24,6 +25,8 @@ export const RoutineHistoryDetailScreen: React.FC<RoutineHistoryDetailScreenProp
   onEdit,
   onDelete
 }) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const insets = useSafeAreaInsets();
 
   const formatDate = (dateString: string) => {
@@ -40,8 +43,8 @@ export const RoutineHistoryDetailScreen: React.FC<RoutineHistoryDetailScreenProp
 
   const getCompletionIcon = (completed: boolean) => {
     return completed 
-      ? { icon: 'checkmark-circle', color: colors.success }
-      : { icon: 'close-circle', color: colors.error };
+      ? { icon: 'checkmark-circle', color: theme.success }
+      : { icon: 'close-circle', color: theme.error };
   };
 
   const renderExerciseCard = (exercise: CompletedExercise, index: number) => {
@@ -88,7 +91,7 @@ export const RoutineHistoryDetailScreen: React.FC<RoutineHistoryDetailScreenProp
             <Text style={styles.progressLabel}>Series completadas:</Text>
             <Text style={[
               styles.progressValue,
-              { color: exercise.completed ? colors.success : colors.text.secondary }
+              { color: exercise.completed ? theme.success : theme.text.secondary }
             ]}>
               {exercise.completedSets} / {exercise.totalSets}
             </Text>
@@ -102,7 +105,7 @@ export const RoutineHistoryDetailScreen: React.FC<RoutineHistoryDetailScreenProp
                   styles.setsProgressFill,
                   { 
                     width: `${(exercise.completedSets / exercise.totalSets) * 100}%`,
-                    backgroundColor: exercise.completed ? colors.success : colors.primary
+                    backgroundColor: exercise.completed ? theme.success : theme.primary
                   }
                 ]} 
               />
@@ -128,7 +131,7 @@ export const RoutineHistoryDetailScreen: React.FC<RoutineHistoryDetailScreenProp
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={onGoBack}>
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <View style={styles.headerInfo}>
           <Text style={styles.headerTitle}>{routineHistory.routineName}</Text>
@@ -137,12 +140,12 @@ export const RoutineHistoryDetailScreen: React.FC<RoutineHistoryDetailScreenProp
         <View style={styles.actionButtons}>
           {onEdit && (
             <TouchableOpacity style={styles.actionButton} onPress={onEdit}>
-              <Ionicons name="create-outline" size={20} color={colors.text.primary} />
+              <Ionicons name="create-outline" size={20} color={theme.text.primary} />
             </TouchableOpacity>
           )}
           {onDelete && (
             <TouchableOpacity style={[styles.actionButton, styles.deleteButton]} onPress={onDelete}>
-              <Ionicons name="trash-outline" size={20} color={colors.error} />
+              <Ionicons name="trash-outline" size={20} color={theme.error} />
             </TouchableOpacity>
           )}
         </View>
@@ -163,7 +166,7 @@ export const RoutineHistoryDetailScreen: React.FC<RoutineHistoryDetailScreenProp
             <View style={styles.summaryStatItem}>
               <Text style={[
                 styles.summaryStatValue,
-                { color: routineHistory.completionPercentage === 100 ? colors.success : colors.primary }
+                { color: routineHistory.completionPercentage === 100 ? theme.success : theme.primary }
               ]}>
                 {routineHistory.completionPercentage}%
               </Text>
@@ -204,7 +207,7 @@ export const RoutineHistoryDetailScreen: React.FC<RoutineHistoryDetailScreenProp
           <View style={styles.analysisCard}>
             <Text style={styles.analysisTitle}>Análisis de Rendimiento</Text>
             <View style={styles.analysisContent}>
-              <Ionicons name="information-circle-outline" size={20} color={colors.primary} />
+              <Ionicons name="information-circle-outline" size={20} color={theme.primary} />
               <Text style={styles.analysisText}>
                 {routineHistory.completionPercentage < 50 
                   ? "Parece que tuviste dificultades con esta rutina. Considera reducir la intensidad o tomarte más descanso."
@@ -221,10 +224,10 @@ export const RoutineHistoryDetailScreen: React.FC<RoutineHistoryDetailScreenProp
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
@@ -233,13 +236,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.surface,
+    borderBottomColor: theme.surface,
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -251,12 +254,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
   },
   headerSubtitle: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
     marginTop: spacing.xs,
   },
@@ -268,7 +271,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: spacing.xs,
@@ -281,7 +284,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
   },
   summaryCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     marginVertical: spacing.lg,
@@ -289,13 +292,13 @@ const styles = StyleSheet.create({
   summaryTitle: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
     marginBottom: spacing.xs,
   },
   summaryDate: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
     marginBottom: spacing.lg,
     textTransform: 'capitalize',
@@ -311,17 +314,17 @@ const styles = StyleSheet.create({
   summaryStatValue: {
     fontSize: typography.sizes.xl,
     fontWeight: typography.weights.bold,
-    color: colors.primary,
+    color: theme.primary,
     marginBottom: spacing.xs,
   },
   summaryStatLabel: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
   },
   detailedStats: {
     borderTopWidth: 1,
-    borderTopColor: colors.background,
+    borderTopColor: theme.background,
     paddingTop: spacing.md,
   },
   detailedStatItem: {
@@ -331,12 +334,12 @@ const styles = StyleSheet.create({
   },
   detailedStatLabel: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   detailedStatValue: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.medium,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   exercisesSection: {
     marginBottom: spacing.lg,
@@ -344,11 +347,11 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.md,
   },
   exerciseCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.md,
     padding: spacing.md,
     marginBottom: spacing.sm,
@@ -356,8 +359,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   exerciseCardCompleted: {
-    borderColor: colors.success + '40',
-    backgroundColor: colors.success + '10',
+    borderColor: theme.success + '40',
+    backgroundColor: theme.success + '10',
   },
   exerciseHeader: {
     flexDirection: 'row',
@@ -368,7 +371,7 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: spacing.md,
@@ -376,7 +379,7 @@ const styles = StyleSheet.create({
   exerciseNumberText: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.bold,
-    color: colors.background,
+    color: theme.background,
   },
   exerciseInfo: {
     flex: 1,
@@ -384,24 +387,24 @@ const styles = StyleSheet.create({
   exerciseName: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.xs,
   },
   exerciseNameIncomplete: {
     textDecorationLine: 'line-through',
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   exerciseDetails: {
     marginBottom: spacing.xs,
   },
   exerciseDetailText: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     marginBottom: spacing.xs / 2,
   },
   exerciseRestText: {
     fontSize: typography.sizes.xs,
-    color: colors.primary,
+    color: theme.primary,
     fontWeight: typography.weights.medium,
   },
   statusContainer: {
@@ -409,7 +412,7 @@ const styles = StyleSheet.create({
   },
   progressContainer: {
     borderTopWidth: 1,
-    borderTopColor: colors.background,
+    borderTopColor: theme.background,
     paddingTop: spacing.sm,
   },
   progressInfo: {
@@ -420,7 +423,7 @@ const styles = StyleSheet.create({
   },
   progressLabel: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     fontWeight: typography.weights.medium,
   },
   progressValue: {
@@ -432,7 +435,7 @@ const styles = StyleSheet.create({
   },
   setsProgressBackground: {
     height: 4,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
     borderRadius: 2,
     overflow: 'hidden',
   },
@@ -441,7 +444,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   analysisCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.md,
     padding: spacing.md,
     marginBottom: spacing.lg,
@@ -449,7 +452,7 @@ const styles = StyleSheet.create({
   analysisTitle: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.md,
   },
   analysisContent: {
@@ -459,7 +462,7 @@ const styles = StyleSheet.create({
   analysisText: {
     flex: 1,
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     marginLeft: spacing.sm,
     lineHeight: 20,
   },

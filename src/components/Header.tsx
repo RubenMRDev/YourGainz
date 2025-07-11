@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, typography, spacing } from '../constants/theme';
+import { typography, spacing } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface HeaderProps {
   userName: string;
@@ -11,6 +12,9 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ userName, userAvatar, onProfilePress }) => {
   const insets = useSafeAreaInsets();
+  const { theme } = useTheme();
+  
+  const styles = createStyles(theme);
   
   return (
     <View style={[styles.container, { paddingTop: insets.top + spacing.md }]}>
@@ -32,14 +36,14 @@ export const Header: React.FC<HeaderProps> = ({ userName, userAvatar, onProfileP
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   logoContainer: {
     flex: 1,
@@ -47,10 +51,10 @@ const styles = StyleSheet.create({
   logoText: {
     fontSize: typography.sizes['2xl'],
     fontWeight: typography.weights.bold,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   logoAccent: {
-    color: colors.primary,
+    color: theme.primary,
   },
   profileContainer: {
     flexDirection: 'row',
@@ -60,19 +64,19 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.medium,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   avatar: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   avatarText: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.bold,
-    color: colors.background,
+    color: theme.background,
   },
 });

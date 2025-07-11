@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MainScreen, ProfileScreen, EditProfileScreen, SettingsScreen, ProgressScreen, OnboardingScreen, ExerciseScreen, ExercisesListScreen, RoutinesScreen, RoutineTrackingScreen, RoutineHistoryScreen, RoutineHistoryDetailScreen, EditRoutineHistoryScreen } from './src/components';
 import { RoutineHistory, CompletedExercise } from './src/types/history';
+import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 
 type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'settings' | 'progress' | 'exercises' | 'exercisesList' | 'routines' | 'routineTracking' | 'routineHistory' | 'routineHistoryDetail' | 'editRoutineHistory';
 
@@ -23,7 +24,8 @@ interface Routine {
   duration: string;
 }
 
-export default function App() {
+function AppContent() {
+  const { theme } = useTheme();
   const [currentScreen, setCurrentScreen] = useState<Screen>('onboarding');
   const [isLoading, setIsLoading] = useState(true);
   const [selectedRoutine, setSelectedRoutine] = useState<Routine | null>(null);
@@ -418,21 +420,27 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
         {renderScreen()}
-        <StatusBar style="light" />
+        <StatusBar style={theme.background === '#1a1a1a' ? 'light' : 'dark'} />
       </View>
     </SafeAreaProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a1a',
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: '#1a1a1a',
   },
 });

@@ -1,15 +1,15 @@
 import { MenuOption, NavigationRoute } from '../types';
-import { colors } from '../constants/theme';
 
 export const createMenuOptions = (
-  onNavigate: (route: NavigationRoute) => void
+  onNavigate: (route: NavigationRoute) => void,
+  theme: any
 ): MenuOption[] => [
   {
     id: 'training',
     title: 'Entrenamiento',
     subtitle: 'Accede a tus rutinas y ejercicios',
     icon: 'fitness-center',
-    color: colors.icons.training,
+    color: theme.icons.training,
     onPress: () => onNavigate('Training'),
   },
   {
@@ -17,7 +17,7 @@ export const createMenuOptions = (
     title: 'Progreso',
     subtitle: 'Visualiza tus estadísticas',
     icon: 'trending-up',
-    color: colors.icons.progress,
+    color: theme.icons.progress,
     onPress: () => onNavigate('Progress'),
   },
   {
@@ -25,7 +25,7 @@ export const createMenuOptions = (
     title: 'Nutrición',
     subtitle: 'Gestiona tu dieta',
     icon: 'restaurant',
-    color: colors.icons.nutrition,
+    color: theme.icons.nutrition,
     onPress: () => onNavigate('Nutrition'),
   },
   {
@@ -33,7 +33,7 @@ export const createMenuOptions = (
     title: 'Comunidad',
     subtitle: 'Conecta con otros usuarios',
     icon: 'people',
-    color: colors.icons.community,
+    color: theme.icons.community,
     onPress: () => onNavigate('Community'),
   },
 ];

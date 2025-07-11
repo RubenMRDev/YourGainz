@@ -1,4 +1,25 @@
-export const colors = {
+export const lightTheme = {
+  primary: '#B8860B', // Darker yellow/gold for light mode
+  background: '#ffffff', // Light background
+  cardBackground: '#f8f9fa', // Light card background
+  surface: '#f8f9fa', // Light surface color for cards and components
+  error: '#ef4444', // Error color
+  success: '#22c55e', // Success color
+  text: {
+    primary: '#1a1a1a',
+    secondary: '#6b7280',
+    accent: '#B8860B'
+  },
+  icons: {
+    training: '#B8860B',
+    progress: '#B8860B',
+    nutrition: '#B8860B',
+    community: '#B8860B',
+    history: '#B8860B'
+  }
+};
+
+export const darkTheme = {
   primary: '#FFD700', // Yellow from YourGainz logo
   background: '#1a1a1a', // Dark background
   cardBackground: '#2a2a2a', // Card background
@@ -18,6 +39,9 @@ export const colors = {
     history: '#FFD700'
   }
 };
+
+// Para mantener compatibilidad con el código existente
+export const colors = darkTheme;
 
 export const typography = {
   sizes: {

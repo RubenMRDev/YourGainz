@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, spacing, typography, borderRadius } from '../constants/theme';
+import { spacing, typography, borderRadius } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface RoutineExercise {
   id: string;
@@ -45,6 +46,8 @@ export const RoutineTrackingScreen: React.FC<RoutineTrackingScreenProps> = ({
   onGoBack, 
   onFinishRoutine 
 }) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const insets = useSafeAreaInsets();
   const [exerciseStates, setExerciseStates] = useState<ExerciseTrackingState[]>([]);
   const [startTime, setStartTime] = useState<Date>(new Date());
@@ -231,7 +234,7 @@ export const RoutineTrackingScreen: React.FC<RoutineTrackingScreenProps> = ({
             <Ionicons 
               name={state.completed ? "checkmark" : "ellipse-outline"} 
               size={24} 
-              color={state.completed ? colors.background : colors.text.secondary} 
+              color={state.completed ? theme.background : theme.text.secondary} 
             />
           </TouchableOpacity>
         </View>
@@ -248,7 +251,7 @@ export const RoutineTrackingScreen: React.FC<RoutineTrackingScreenProps> = ({
               <Ionicons 
                 name="remove" 
                 size={16} 
-                color={state.completedSets === 0 ? colors.text.secondary : colors.primary} 
+                color={state.completedSets === 0 ? theme.text.secondary : theme.primary} 
               />
             </TouchableOpacity>
             <Text style={styles.setsCount}>
@@ -262,7 +265,7 @@ export const RoutineTrackingScreen: React.FC<RoutineTrackingScreenProps> = ({
               <Ionicons 
                 name="add" 
                 size={16} 
-                color={state.completedSets >= exercise.sets ? colors.text.secondary : colors.primary} 
+                color={state.completedSets >= exercise.sets ? theme.text.secondary : theme.primary} 
               />
             </TouchableOpacity>
           </View>
@@ -276,7 +279,7 @@ export const RoutineTrackingScreen: React.FC<RoutineTrackingScreenProps> = ({
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <View style={styles.headerInfo}>
           <Text style={styles.headerTitle}>{routine.name}</Text>
@@ -318,7 +321,7 @@ export const RoutineTrackingScreen: React.FC<RoutineTrackingScreenProps> = ({
           style={styles.finishButton}
           onPress={handleFinishRoutine}
         >
-          <Ionicons name="checkmark-circle" size={24} color={colors.background} />
+          <Ionicons name="checkmark-circle" size={24} color={theme.background} />
           <Text style={styles.finishButtonText}>Terminar Rutina</Text>
         </TouchableOpacity>
       </View>
@@ -326,10 +329,10 @@ export const RoutineTrackingScreen: React.FC<RoutineTrackingScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
@@ -338,13 +341,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.surface,
+    borderBottomColor: theme.surface,
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -356,12 +359,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     textAlign: 'center',
   },
   headerSubtitle: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
     marginTop: spacing.xs,
   },
@@ -372,7 +375,7 @@ const styles = StyleSheet.create({
   progressText: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.semibold,
-    color: colors.primary,
+    color: theme.primary,
   },
   progressBarContainer: {
     paddingHorizontal: spacing.lg,
@@ -380,13 +383,13 @@ const styles = StyleSheet.create({
   },
   progressBarBackground: {
     height: 6,
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: 3,
     overflow: 'hidden',
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     borderRadius: 3,
   },
   content: {
@@ -396,7 +399,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
   },
   exerciseCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: theme.surface,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     marginBottom: spacing.md,
@@ -404,8 +407,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   exerciseCardCompleted: {
-    borderColor: colors.primary,
-    backgroundColor: colors.primary + '10',
+    borderColor: theme.primary,
+    backgroundColor: theme.primary + '10',
   },
   exerciseHeader: {
     flexDirection: 'row',
@@ -416,7 +419,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: spacing.md,
@@ -424,7 +427,7 @@ const styles = StyleSheet.create({
   exerciseNumberText: {
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.bold,
-    color: colors.background,
+    color: theme.background,
   },
   exerciseInfo: {
     flex: 1,
@@ -432,39 +435,39 @@ const styles = StyleSheet.create({
   exerciseName: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: spacing.xs,
   },
   exerciseNameCompleted: {
     textDecorationLine: 'line-through',
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   exerciseDetails: {
     marginBottom: spacing.xs,
   },
   exerciseDetailText: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     marginBottom: spacing.xs / 2,
   },
   exerciseRestText: {
     fontSize: typography.sizes.xs,
-    color: colors.primary,
+    color: theme.primary,
     fontWeight: typography.weights.medium,
   },
   completeButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: colors.text.secondary,
+    borderColor: theme.text.secondary,
   },
   completeButtonActive: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    backgroundColor: theme.primary,
+    borderColor: theme.primary,
   },
   setsContainer: {
     flexDirection: 'row',
@@ -472,11 +475,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: spacing.sm,
     borderTopWidth: 1,
-    borderTopColor: colors.background,
+    borderTopColor: theme.background,
   },
   setsLabel: {
     fontSize: typography.sizes.sm,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     fontWeight: typography.weights.medium,
   },
   setsControls: {
@@ -488,14 +491,14 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: colors.background,
+    backgroundColor: theme.background,
     justifyContent: 'center',
     alignItems: 'center',
   },
   setsCount: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.text.primary,
+    color: theme.text.primary,
     minWidth: 50,
     textAlign: 'center',
   },
@@ -503,13 +506,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.lg,
     borderTopWidth: 1,
-    borderTopColor: colors.surface,
+    borderTopColor: theme.surface,
   },
   finishButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: theme.primary,
     paddingVertical: spacing.md,
     borderRadius: borderRadius.lg,
     gap: spacing.sm,
@@ -517,6 +520,6 @@ const styles = StyleSheet.create({
   finishButtonText: {
     fontSize: typography.sizes.base,
     fontWeight: typography.weights.semibold,
-    color: colors.background,
+    color: theme.background,
   },
 });
