@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   },
   filtersContent: {
     paddingLeft: spacing.sm, // Reducido para usar el margen del wrapper
-    paddingRight: 150, // Más padding para asegurar visibilidad completa
+    paddingRight: spacing.sm, // Padding mínimo necesario
     gap: spacing.sm,
     alignItems: 'center',
     height: 50, // Fixed height for content
