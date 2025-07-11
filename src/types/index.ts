@@ -19,3 +19,9 @@ export type NavigationRoute =
   | 'Progress'
   | 'Nutrition'
   | 'Community';
+
+export type ExerciseNavigationRoute = 
+  | 'Routines'
+  | 'Exercises'
+  | 'Workouts'
+  | 'Programs';

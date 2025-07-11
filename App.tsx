@@ -3,9 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MainScreen, ProfileScreen, EditProfileScreen, ProgressScreen, OnboardingScreen } from './src/components';
+import { MainScreen, ProfileScreen, EditProfileScreen, ProgressScreen, OnboardingScreen, ExerciseScreen } from './src/components';
 
-type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'progress';
+type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'progress' | 'exercises';
 
 interface UserData {
   name: string;
@@ -65,6 +65,10 @@ export default function App() {
     setCurrentScreen('progress');
   };
 
+  const navigateToExercises = () => {
+    setCurrentScreen('exercises');
+  };
+
   const completeOnboarding = async () => {
     try {
       await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
@@ -91,6 +95,14 @@ export default function App() {
     switch (currentScreen) {
       case 'onboarding':
         return <OnboardingScreen onComplete={completeOnboarding} />;
+      case 'exercises':
+        return (
+          <ExerciseScreen
+            userName={userData.name}
+            onProfilePress={navigateToProfile}
+            onBackPress={navigateToMain}
+          />
+        );
       case 'progress':
         return (
           <ProgressScreen 
@@ -123,7 +135,14 @@ export default function App() {
         );
       case 'main':
       default:
-        return <MainScreen userName={userData.name} onProfilePress={navigateToProfile} onProgressPress={navigateToProgress} />;
+        return (
+          <MainScreen 
+            userName={userData.name} 
+            onProfilePress={navigateToProfile} 
+            onProgressPress={navigateToProgress}
+            onTrainingPress={navigateToExercises}
+          />
+        );
     }
   };
 

@@ -12,17 +12,24 @@ interface MainScreenProps {
   userName?: string;
   onProfilePress?: () => void;
   onProgressPress?: () => void;
+  onTrainingPress?: () => void;
 }
 
 export const MainScreen: React.FC<MainScreenProps> = ({ 
   userName = 'John Doe',
   onProfilePress,
-  onProgressPress
+  onProgressPress,
+  onTrainingPress
 }) => {
   const insets = useSafeAreaInsets();
   
   const handleNavigation = (route: NavigationRoute) => {
     switch (route) {
+      case 'Training':
+        if (onTrainingPress) {
+          onTrainingPress();
+        }
+        break;
       case 'Progress':
         if (onProgressPress) {
           onProgressPress();
