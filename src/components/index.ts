@@ -4,6 +4,7 @@ export { MenuCard } from './MenuCard';
 export { MenuSection } from './MenuSection';
 export { MainScreen } from './MainScreen';
 export { ExerciseScreen } from './ExerciseScreen';
+export { ExercisesListScreen } from './ExercisesListScreen';
 export { ProfileScreen } from './ProfileScreen';
 export { EditProfileScreen } from './EditProfileScreen';
 export { ProgressScreen } from './ProgressScreen';

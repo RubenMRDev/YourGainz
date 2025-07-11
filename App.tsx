@@ -3,9 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MainScreen, ProfileScreen, EditProfileScreen, ProgressScreen, OnboardingScreen, ExerciseScreen } from './src/components';
+import { MainScreen, ProfileScreen, EditProfileScreen, ProgressScreen, OnboardingScreen, ExerciseScreen, ExercisesListScreen } from './src/components';
 
-type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'progress' | 'exercises';
+type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'progress' | 'exercises' | 'exercisesList';
 
 interface UserData {
   name: string;
@@ -69,6 +69,10 @@ export default function App() {
     setCurrentScreen('exercises');
   };
 
+  const navigateToExercisesList = () => {
+    setCurrentScreen('exercisesList');
+  };
+
   const completeOnboarding = async () => {
     try {
       await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
@@ -101,6 +105,13 @@ export default function App() {
             userName={userData.name}
             onProfilePress={navigateToProfile}
             onBackPress={navigateToMain}
+            onExercisesPress={navigateToExercisesList}
+          />
+        );
+      case 'exercisesList':
+        return (
+          <ExercisesListScreen
+            onBackPress={navigateToExercises}
           />
         );
       case 'progress':

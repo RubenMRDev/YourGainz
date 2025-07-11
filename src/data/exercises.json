@@ -1,0 +1,290 @@
+[
+  {
+    "id": "1",
+    "name": "Push-ups",
+    "description": "A classic bodyweight exercise that targets the chest, shoulders, and triceps.",
+    "muscleGroup": "Chest",
+    "difficulty": "Beginner",
+    "equipment": "Bodyweight",
+    "additionalMuscles": ["Shoulders", "Triceps"]
+  },
+  {
+    "id": "2",
+    "name": "Squats",
+    "description": "A fundamental lower body exercise that targets the quadriceps, glutes, and hamstrings.",
+    "muscleGroup": "Legs",
+    "difficulty": "Beginner",
+    "equipment": "Bodyweight",
+    "additionalMuscles": ["Quadriceps", "Glutes"]
+  },
+  {
+    "id": "3",
+    "name": "Pull-ups",
+    "description": "An upper body pulling exercise that targets the back, biceps, and shoulders.",
+    "muscleGroup": "Back",
+    "difficulty": "Intermediate",
+    "equipment": "Pull-up bar",
+    "additionalMuscles": ["Latissimus dorsi", "Biceps"]
+  },
+  {
+    "id": "4",
+    "name": "Bench Press",
+    "description": "A compound exercise that primarily targets the chest, shoulders, and triceps.",
+    "muscleGroup": "Chest",
+    "difficulty": "Intermediate",
+    "equipment": "Barbell",
+    "additionalMuscles": ["Shoulders", "Triceps"]
+  },
+  {
+    "id": "5",
+    "name": "Deadlifts",
+    "description": "A full-body compound movement that targets the posterior chain.",
+    "muscleGroup": "Back",
+    "difficulty": "Advanced",
+    "equipment": "Barbell",
+    "additionalMuscles": ["Hamstrings", "Glutes"]
+  },
+  {
+    "id": "6",
+    "name": "Overhead Press",
+    "description": "A vertical pressing movement that targets the shoulders and triceps.",
+    "muscleGroup": "Shoulders",
+    "difficulty": "Intermediate",
+    "equipment": "Barbell",
+    "additionalMuscles": ["Triceps", "Core"]
+  },
+  {
+    "id": "7",
+    "name": "Lunges",
+    "description": "A unilateral leg exercise that targets the quadriceps and glutes.",
+    "muscleGroup": "Legs",
+    "difficulty": "Beginner",
+    "equipment": "Bodyweight",
+    "additionalMuscles": ["Quadriceps", "Glutes"]
+  },
+  {
+    "id": "8",
+    "name": "Dips",
+    "description": "A bodyweight exercise that targets the triceps and chest.",
+    "muscleGroup": "Chest",
+    "difficulty": "Intermediate",
+    "equipment": "Parallel bars",
+    "additionalMuscles": ["Triceps", "Shoulders"]
+  },
+  {
+    "id": "9",
+    "name": "Bicep Curls",
+    "description": "An isolation exercise that targets the biceps.",
+    "muscleGroup": "Arms",
+    "difficulty": "Beginner",
+    "equipment": "Dumbbells",
+    "additionalMuscles": ["Forearms"]
+  },
+  {
+    "id": "10",
+    "name": "Tricep Extensions",
+    "description": "An isolation exercise that targets the triceps.",
+    "muscleGroup": "Arms",
+    "difficulty": "Beginner",
+    "equipment": "Dumbbells",
+    "additionalMuscles": ["Shoulders"]
+  },
+  {
+    "id": "11",
+    "name": "Lat Pulldowns",
+    "description": "A pulling exercise that targets the latissimus dorsi and rhomboids.",
+    "muscleGroup": "Back",
+    "difficulty": "Beginner",
+    "equipment": "Cable machine",
+    "additionalMuscles": ["Biceps", "Rhomboids"]
+  },
+  {
+    "id": "12",
+    "name": "Leg Press",
+    "description": "A leg exercise performed on a machine that targets the quadriceps.",
+    "muscleGroup": "Legs",
+    "difficulty": "Beginner",
+    "equipment": "Leg press machine",
+    "additionalMuscles": ["Glutes", "Hamstrings"]
+  },
+  {
+    "id": "13",
+    "name": "Shoulder Shrugs",
+    "description": "An exercise that targets the upper trapezius muscles.",
+    "muscleGroup": "Shoulders",
+    "difficulty": "Beginner",
+    "equipment": "Dumbbells",
+    "additionalMuscles": ["Trapezius"]
+  },
+  {
+    "id": "14",
+    "name": "Plank",
+    "description": "An isometric core strengthening exercise.",
+    "muscleGroup": "Core",
+    "difficulty": "Beginner",
+    "equipment": "Bodyweight",
+    "additionalMuscles": ["Shoulders", "Glutes"]
+  },
+  {
+    "id": "15",
+    "name": "Russian Twists",
+    "description": "A core exercise that targets the obliques and rectus abdominis.",
+    "muscleGroup": "Core",
+    "difficulty": "Beginner",
+    "equipment": "Bodyweight",
+    "additionalMuscles": ["Obliques"]
+  },
+  {
+    "id": "16",
+    "name": "Incline Bench Press",
+    "description": "An upper chest exercise performed on an inclined bench.",
+    "muscleGroup": "Chest",
+    "difficulty": "Intermediate",
+    "equipment": "Barbell",
+    "additionalMuscles": ["Shoulders", "Triceps"]
+  },
+  {
+    "id": "17",
+    "name": "Calf Raises",
+    "description": "An exercise that targets the calf muscles.",
+    "muscleGroup": "Legs",
+    "difficulty": "Beginner",
+    "equipment": "Bodyweight",
+    "additionalMuscles": ["Gastrocnemius", "Soleus"]
+  },
+  {
+    "id": "18",
+    "name": "Rows",
+    "description": "A pulling exercise that targets the middle back and rhomboids.",
+    "muscleGroup": "Back",
+    "difficulty": "Intermediate",
+    "equipment": "Barbell",
+    "additionalMuscles": ["Biceps", "Rear delts"]
+  },
+  {
+    "id": "19",
+    "name": "Lateral Raises",
+    "description": "An isolation exercise that targets the lateral deltoids.",
+    "muscleGroup": "Shoulders",
+    "difficulty": "Beginner",
+    "equipment": "Dumbbells",
+    "additionalMuscles": ["Trapezius"]
+  },
+  {
+    "id": "20",
+    "name": "Leg Curls",
+    "description": "An isolation exercise that targets the hamstrings.",
+    "muscleGroup": "Legs",
+    "difficulty": "Beginner",
+    "equipment": "Leg curl machine",
+    "additionalMuscles": ["Glutes"]
+  },
+  {
+    "id": "21",
+    "name": "Mountain Climbers",
+    "description": "A full-body cardio exercise that targets the core and legs.",
+    "muscleGroup": "Core",
+    "difficulty": "Intermediate",
+    "equipment": "Bodyweight",
+    "additionalMuscles": ["Legs", "Shoulders"]
+  },
+  {
+    "id": "22",
+    "name": "Hammer Curls",
+    "description": "A bicep exercise that also targets the forearms.",
+    "muscleGroup": "Arms",
+    "difficulty": "Beginner",
+    "equipment": "Dumbbells",
+    "additionalMuscles": ["Forearms", "Brachialis"]
+  },
+  {
+    "id": "23",
+    "name": "Close-Grip Bench Press",
+    "description": "A tricep-focused variation of the bench press.",
+    "muscleGroup": "Arms",
+    "difficulty": "Intermediate",
+    "equipment": "Barbell",
+    "additionalMuscles": ["Chest", "Shoulders"]
+  },
+  {
+    "id": "24",
+    "name": "Face Pulls",
+    "description": "A rear deltoid exercise that improves posture.",
+    "muscleGroup": "Shoulders",
+    "difficulty": "Beginner",
+    "equipment": "Cable machine",
+    "additionalMuscles": ["Rear delts", "Rhomboids"]
+  },
+  {
+    "id": "25",
+    "name": "Goblet Squats",
+    "description": "A squat variation using a dumbbell or kettlebell.",
+    "muscleGroup": "Legs",
+    "difficulty": "Beginner",
+    "equipment": "Dumbbell",
+    "additionalMuscles": ["Core", "Shoulders"]
+  },
+  {
+    "id": "26",
+    "name": "Decline Bench Press",
+    "description": "A lower chest exercise performed on a declined bench.",
+    "muscleGroup": "Chest",
+    "difficulty": "Intermediate",
+    "equipment": "Barbell",
+    "additionalMuscles": ["Triceps", "Shoulders"]
+  },
+  {
+    "id": "27",
+    "name": "Bulgarian Split Squats",
+    "description": "A single-leg exercise that targets the quadriceps and glutes.",
+    "muscleGroup": "Legs",
+    "difficulty": "Intermediate",
+    "equipment": "Bodyweight",
+    "additionalMuscles": ["Glutes", "Core"]
+  },
+  {
+    "id": "28",
+    "name": "T-Bar Rows",
+    "description": "A rowing exercise that targets the middle back.",
+    "muscleGroup": "Back",
+    "difficulty": "Intermediate",
+    "equipment": "T-bar",
+    "additionalMuscles": ["Biceps", "Rear delts"]
+  },
+  {
+    "id": "29",
+    "name": "Arnold Press",
+    "description": "A shoulder exercise that combines a press with rotation.",
+    "muscleGroup": "Shoulders",
+    "difficulty": "Intermediate",
+    "equipment": "Dumbbells",
+    "additionalMuscles": ["Triceps", "Core"]
+  },
+  {
+    "id": "30",
+    "name": "Hanging Knee Raises",
+    "description": "A core exercise that targets the lower abs.",
+    "muscleGroup": "Core",
+    "difficulty": "Intermediate",
+    "equipment": "Pull-up bar",
+    "additionalMuscles": ["Hip flexors", "Forearms"]
+  },
+  {
+    "id": "31",
+    "name": "Cable Flyes",
+    "description": "An isolation exercise that targets the chest muscles.",
+    "muscleGroup": "Chest",
+    "difficulty": "Beginner",
+    "equipment": "Cable machine",
+    "additionalMuscles": ["Shoulders"]
+  },
+  {
+    "id": "32",
+    "name": "Romanian Deadlifts",
+    "description": "A deadlift variation that emphasizes the hamstrings.",
+    "muscleGroup": "Legs",
+    "difficulty": "Intermediate",
+    "equipment": "Barbell",
+    "additionalMuscles": ["Hamstrings", "Glutes"]
+  }
+]

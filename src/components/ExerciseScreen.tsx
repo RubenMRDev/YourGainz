@@ -15,12 +15,14 @@ interface ExerciseScreenProps {
   userName?: string;
   onProfilePress?: () => void;
   onBackPress?: () => void;
+  onExercisesPress?: () => void;
 }
 
 export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({ 
   userName = 'John Doe',
   onProfilePress,
-  onBackPress
+  onBackPress,
+  onExercisesPress
 }) => {
   const insets = useSafeAreaInsets();
   
@@ -34,11 +36,15 @@ export const ExerciseScreen: React.FC<ExerciseScreenProps> = ({
         );
         break;
       case 'Exercises':
-        Alert.alert(
-          'Ejercicios',
-          'Explora nuestra biblioteca de ejercicios',
-          [{ text: 'OK' }]
-        );
+        if (onExercisesPress) {
+          onExercisesPress();
+        } else {
+          Alert.alert(
+            'Ejercicios',
+            'Explora nuestra biblioteca de ejercicios',
+            [{ text: 'OK' }]
+          );
+        }
         break;
       case 'History':
         Alert.alert(
