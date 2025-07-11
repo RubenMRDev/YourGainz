@@ -27,3 +27,6 @@ export type ExerciseNavigationRoute =
   | 'Workouts'
   | 'Programs'
   | 'History';
+
+// Re-export nutrition types
+export * from './nutrition';

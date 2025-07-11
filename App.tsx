@@ -3,11 +3,11 @@ import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet, Alert } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MainScreen, ProfileScreen, EditProfileScreen, SettingsScreen, ProgressScreen, OnboardingScreen, ExerciseScreen, ExercisesListScreen, RoutinesScreen, RoutineTrackingScreen, RoutineHistoryScreen, RoutineHistoryDetailScreen, EditRoutineHistoryScreen } from './src/components';
+import { MainScreen, ProfileScreen, EditProfileScreen, SettingsScreen, ProgressScreen, OnboardingScreen, ExerciseScreen, ExercisesListScreen, RoutinesScreen, RoutineTrackingScreen, RoutineHistoryScreen, RoutineHistoryDetailScreen, EditRoutineHistoryScreen, NutritionScreen } from './src/components';
 import { RoutineHistory, CompletedExercise } from './src/types/history';
 import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 
-type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'settings' | 'progress' | 'exercises' | 'exercisesList' | 'routines' | 'routineTracking' | 'routineHistory' | 'routineHistoryDetail' | 'editRoutineHistory';
+type Screen = 'onboarding' | 'main' | 'profile' | 'editProfile' | 'settings' | 'progress' | 'exercises' | 'exercisesList' | 'routines' | 'routineTracking' | 'routineHistory' | 'routineHistoryDetail' | 'editRoutineHistory' | 'nutrition';
 
 interface UserData {
   name: string;
@@ -177,6 +177,10 @@ function AppContent() {
     setCurrentScreen('progress');
   };
 
+  const navigateToNutrition = () => {
+    setCurrentScreen('nutrition');
+  };
+
   const navigateToExercises = () => {
     setCurrentScreen('exercises');
   };
@@ -317,6 +321,12 @@ function AppContent() {
             userName={userData.name}
           />
         );
+      case 'nutrition':
+        return (
+          <NutritionScreen 
+            onBack={navigateToMain}
+          />
+        );
       case 'editProfile':
         return (
           <EditProfileScreen 
@@ -413,6 +423,7 @@ function AppContent() {
             onProfilePress={navigateToProfile} 
             onProgressPress={navigateToProgress}
             onTrainingPress={navigateToExercises}
+            onNutritionPress={navigateToNutrition}
           />
         );
     }

@@ -1,0 +1,274 @@
+[
+  {
+    "id": "chicken_breast",
+    "name": "Pechuga de pollo",
+    "macros": {
+      "calories": 165,
+      "protein": 31,
+      "carbs": 0,
+      "fat": 3.6
+    },
+    "category": "proteins",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Pechuga mediana", "grams": 150 },
+      { "name": "Pechuga grande", "grams": 200 }
+    ]
+  },
+  {
+    "id": "white_rice",
+    "name": "Arroz blanco cocido",
+    "macros": {
+      "calories": 130,
+      "protein": 2.7,
+      "carbs": 28,
+      "fat": 0.3
+    },
+    "category": "carbs",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Taza", "grams": 158 },
+      { "name": "Plato pequeño", "grams": 100 }
+    ]
+  },
+  {
+    "id": "brown_rice",
+    "name": "Arroz integral cocido",
+    "macros": {
+      "calories": 112,
+      "protein": 2.6,
+      "carbs": 23,
+      "fat": 0.9
+    },
+    "category": "carbs",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Taza", "grams": 195 },
+      { "name": "Plato pequeño", "grams": 100 }
+    ]
+  },
+  {
+    "id": "sweet_potato",
+    "name": "Batata cocida",
+    "macros": {
+      "calories": 86,
+      "protein": 1.6,
+      "carbs": 20,
+      "fat": 0.1
+    },
+    "category": "carbs",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Batata mediana", "grams": 128 },
+      { "name": "Batata grande", "grams": 180 }
+    ]
+  },
+  {
+    "id": "broccoli",
+    "name": "Brócoli",
+    "macros": {
+      "calories": 34,
+      "protein": 2.8,
+      "carbs": 7,
+      "fat": 0.4
+    },
+    "category": "vegetables",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Taza picado", "grams": 91 },
+      { "name": "Floretes medianos", "grams": 150 }
+    ]
+  },
+  {
+    "id": "salmon",
+    "name": "Salmón",
+    "macros": {
+      "calories": 208,
+      "protein": 25,
+      "carbs": 0,
+      "fat": 12
+    },
+    "category": "proteins",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Filete", "grams": 150 },
+      { "name": "Porción", "grams": 100 }
+    ]
+  },
+  {
+    "id": "eggs",
+    "name": "Huevos",
+    "macros": {
+      "calories": 155,
+      "protein": 13,
+      "carbs": 1.1,
+      "fat": 11
+    },
+    "category": "proteins",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "1 huevo grande", "grams": 50 },
+      { "name": "2 huevos", "grams": 100 }
+    ]
+  },
+  {
+    "id": "avocado",
+    "name": "Aguacate",
+    "macros": {
+      "calories": 160,
+      "protein": 2,
+      "carbs": 9,
+      "fat": 15
+    },
+    "category": "oils_fats",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "1/2 aguacate", "grams": 100 },
+      { "name": "1 aguacate", "grams": 200 }
+    ]
+  },
+  {
+    "id": "oats",
+    "name": "Avena",
+    "macros": {
+      "calories": 389,
+      "protein": 17,
+      "carbs": 66,
+      "fat": 7
+    },
+    "category": "carbs",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Taza", "grams": 81 },
+      { "name": "1/2 taza", "grams": 40 }
+    ]
+  },
+  {
+    "id": "banana",
+    "name": "Plátano",
+    "macros": {
+      "calories": 89,
+      "protein": 1.1,
+      "carbs": 23,
+      "fat": 0.3
+    },
+    "category": "fruits",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "1 plátano mediano", "grams": 118 },
+      { "name": "1 plátano grande", "grams": 136 }
+    ]
+  },
+  {
+    "id": "apple",
+    "name": "Manzana",
+    "macros": {
+      "calories": 52,
+      "protein": 0.3,
+      "carbs": 14,
+      "fat": 0.2
+    },
+    "category": "fruits",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "1 manzana mediana", "grams": 182 },
+      { "name": "1 manzana pequeña", "grams": 149 }
+    ]
+  },
+  {
+    "id": "greek_yogurt",
+    "name": "Yogur griego natural",
+    "macros": {
+      "calories": 59,
+      "protein": 10,
+      "carbs": 3.6,
+      "fat": 0.4
+    },
+    "category": "dairy",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Envase (170g)", "grams": 170 },
+      { "name": "Taza", "grams": 245 }
+    ]
+  },
+  {
+    "id": "almonds",
+    "name": "Almendras",
+    "macros": {
+      "calories": 579,
+      "protein": 21,
+      "carbs": 22,
+      "fat": 50
+    },
+    "category": "nuts_seeds",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Puñado (23 almendras)", "grams": 28 },
+      { "name": "1/4 taza", "grams": 35 }
+    ]
+  },
+  {
+    "id": "olive_oil",
+    "name": "Aceite de oliva",
+    "macros": {
+      "calories": 884,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 100
+    },
+    "category": "oils_fats",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "1 cucharada", "grams": 14 },
+      { "name": "1 cucharadita", "grams": 5 }
+    ]
+  },
+  {
+    "id": "whole_milk",
+    "name": "Leche entera",
+    "macros": {
+      "calories": 61,
+      "protein": 3.2,
+      "carbs": 4.8,
+      "fat": 3.3
+    },
+    "category": "dairy",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Vaso (240ml)", "grams": 244 },
+      { "name": "Taza", "grams": 244 }
+    ]
+  },
+  {
+    "id": "tuna",
+    "name": "Atún en agua",
+    "macros": {
+      "calories": 116,
+      "protein": 25,
+      "carbs": 0,
+      "fat": 1
+    },
+    "category": "proteins",
+    "isCustom": false,
+    "isFavorite": false,
+    "commonPortions": [
+      { "name": "Lata (85g)", "grams": 85 },
+      { "name": "1/2 lata", "grams": 42 }
+    ]
+  }
+]

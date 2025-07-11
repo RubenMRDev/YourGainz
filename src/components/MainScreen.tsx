@@ -14,13 +14,15 @@ interface MainScreenProps {
   onProfilePress?: () => void;
   onProgressPress?: () => void;
   onTrainingPress?: () => void;
+  onNutritionPress?: () => void;
 }
 
 export const MainScreen: React.FC<MainScreenProps> = ({ 
   userName = 'John Doe',
   onProfilePress,
   onProgressPress,
-  onTrainingPress
+  onTrainingPress,
+  onNutritionPress
 }) => {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
@@ -37,6 +39,11 @@ export const MainScreen: React.FC<MainScreenProps> = ({
       case 'Progress':
         if (onProgressPress) {
           onProgressPress();
+        }
+        break;
+      case 'Nutrition':
+        if (onNutritionPress) {
+          onNutritionPress();
         }
         break;
       default:
